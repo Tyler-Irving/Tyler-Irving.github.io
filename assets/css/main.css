@@ -2386,12 +2386,14 @@ input, select, textarea {
 
 		.image.fit {
 			display: block;
-			margin: 5em 2em 2em 2em;
+			margin: 2em 2em 2em 2em;
 			width: 100%;
 		}
 
 			.image.fit img {
 				width: 100%;
+				padding-right: 10px;
+				margin-right: 1em;
 			}
 
 /* List */
@@ -3469,7 +3471,9 @@ input, select, textarea {
 						#footer .copyright li:first-child {
 							margin-top: 0;
 						}
-
+			.image {
+				padding-right: 50px;
+			}
 	}
 
 /* XXSmall */
