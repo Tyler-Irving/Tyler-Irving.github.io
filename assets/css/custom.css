@@ -61,6 +61,11 @@ body{
     display: inline-block;
 }
 
+#resume-icon {
+    width: 25px;
+    height: 25px;
+}
+
 @media screen and (max-width: 980px) {
     #project-list {
         display: flex;
