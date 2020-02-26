@@ -5,24 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./assets/favicon.png">
+    <link rel="stylesheet" href="animation.js" defer>
     <title>Tyler Irving (BCCA 2020)</title>
 
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/slate/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-G9YbB4o4U6WS4wCthMOpAeweY4gQJyyx0P3nZbEBHyz+AtNoeasfRChmek1C2iqV" crossorigin="anonymous">
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"
+        defer></script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"
+        defer></script>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"
+        defer></script>
 
-    <script src="https://kit.fontawesome.com/81d9a77ad0.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/81d9a77ad0.js" crossorigin="anonymous" defer></script>
 
 
     <style>
@@ -38,6 +39,10 @@
 
         .bold {
             color: aliceblue;
+        }
+
+        .raised {
+            box-shadow: 5px 5px blanchedalmond;
         }
     </style>
 </head>
@@ -57,7 +62,7 @@
                         class="fab fa-instagram"></i></a>
 
                 | <a href="./assets/Tyler Irving Resume.pdf" target="_blank" rel="noopener noreferrer"> Resume <i
-                        class="fas fa-file"></i>
+                        class="far fa-file"></i>
 
                 </a>
 
@@ -77,7 +82,7 @@
                         I am currently enrolled in <a href="https://basecampcodingacademy.org/" target="_blank">Base
                             Camp
                             Coding Academy</a> in
-                        Water Valley, Mississippi. At Base Camp, I am learning the skills to be a full-stack web
+                        Water Valley, Mississippi. I am learning the skills to be a full-stack web
                         application developer, and I have been building my proficiency in Java, Python, Django,
                         HTML/CSS,
                         Javascript, Git, SQL, Redis, and PostgreSQL.
@@ -88,7 +93,7 @@
         </div>
         <h1 class="text-primary-white">Showcase</h1>
         <div class="card-columns mb-3">
-            <div class="card border border-dark">
+            <div class="card border border-dark raised">
                 <div class="card-body">
                     <h5 class="card-title">My Work</h5>
                     <p class="card-text">These cards are a collection of my technical experiences as part of
@@ -102,8 +107,11 @@
             </div>
             <div class="card border border-dark">
                 <img src="./assets/facebook.jpg" class="card-img-top">
+                <div class="card-body">
+                    <small class="text-muted">Base Camp Coding Academy officially sponsored by Facebook</small>
+                </div>
             </div>
-            <div class="card border border-dark">
+            <div class="card border border-dark raised">
                 <div class="card-body">
                     <h5 class="card-title">Personal Portfolio</h5>
                     <h6 class="card-title">Created using <strong class="bold">HTML, CSS,</strong> and <strong
@@ -123,7 +131,7 @@
                     <p class="card-text"><small class="text-muted">November 2020</small></p>
                 </div>
             </div>
-            <div class="card border border-dark">
+            <div class="card border border-dark raised">
                 <img src="./assets/Snake-game-screenshot.png" class="card-img-top border border-dark">
                 <div class="card-body">
                     <h5 class="card-title">Snake</h5>
@@ -143,7 +151,7 @@
                     </small>
                 </div>
             </div>
-            <div class="card border border-dark">
+            <div class="card border border-dark raised">
                 <img src="./assets/Java_nominations_screenshot.png" class="card-img-top border border-dark">
                 <div class="card-body">
                     <h5 class="card-title">Java Nomination Benchmark</h5>
@@ -167,8 +175,11 @@
             </div>
             <div class="card border border-dark">
                 <img src="./assets/olemiss.png" class="card-img-top">
+                <div class="card-body">
+                    <small class="text-muted">Speakers Edge at The University of Mississippi</small>
+                </div>
             </div>
-            <div class="card border border-dark">
+            <div class="card border border-dark raised">
                 <img src="./assets/ascent.png" class="card-img-top border border-dark">
                 <div class="card-body">
                     <h5 class="card-title">Ascent: Student Mileage Tracker</h5>
@@ -196,6 +207,9 @@
             </div>
             <div class="card border border-dark">
                 <img src="./assets/cspire.jpg" class="card-img-top">
+                <div class="card-body">
+                    <small class="text-muted">Base Camp class of 2020 visits Cspire</small>
+                </div>
             </div>
         </div>
         <h1 class="text-primary-white">About Me</h1>
@@ -206,8 +220,8 @@
                 program.
             </p>
             <p>
-                Joining Base Camp was an incredibly wonderful decision. The program has challenged me in many ways, but
-                with those challenges come valuable lessons that will forever stick with me through my career. I
+                Joining Base Camp was an incredibly wonderful decision. I've learned many lessons from going through
+                Base Camp that will help me in my future career. I
                 thoroughly enjoy working in group projects because it allows us to collaborate and bounce ideas off each
                 other when working. My favorite part about Base Camp is the professional guidance from our wonderful
                 instructor Fernae Ellard.
