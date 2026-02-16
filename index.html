@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./assets/favicon.png">
-    <title>Tyler Irving (BCCA 2020)</title>
+    <title>Tyler Irving - RPA Developer & Full Stack Engineer</title>
 
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/slate/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-G9YbB4o4U6WS4wCthMOpAeweY4gQJyyx0P3nZbEBHyz+AtNoeasfRChmek1C2iqV" crossorigin="anonymous">
@@ -24,7 +24,6 @@
 
     <script src="https://kit.fontawesome.com/81d9a77ad0.js" crossorigin="anonymous" defer></script>
 
-
     <style>
         .img-circle {
             border-radius: 50%;
@@ -34,32 +33,48 @@
             position: fixed;
             width: 100%;
             max-width: 100%;
+            z-index: 1000;
         }
 
         .bold {
             color: aliceblue;
+        }
+
+        .project-card {
+            transition: transform 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            margin: 0.2rem;
+            background-color: #007bff;
+            color: white;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        body {
+            padding-top: 60px;
         }
     </style>
 </head>
 
 <body>
     <div class="p-2 bg-primary sticky-top">
-        <p class="text-white my-0">
-            Connect with me on
-            <a class="text-white" href="https://www.linkedin.com/in/tyler-irving-94b567189/">Linkedin <i
-                    class="fab fa-linkedin"></i>
-                |
-                <a class="text-white" href="https://github.com/Tyler-Irving">Github <i class="fab fa-github"></i></a>
-
-                |
-                <a class="text-white" href="mailto:tirving@basecampcodingacademy.org">Email <i
-                        class="fas fa-envelope"></i></a>
-
-                | <a href="./assets/Tyler Irving Resume.pdf" target="_blank" rel="noopener noreferrer">
-                    Resume <i class="far fa-file"></i></a>
-
+        <p class="text-white my-0 text-center">
+            <a class="text-white" href="https://github.com/Tyler-Irving"><i class="fab fa-github"></i> GitHub</a>
+            |
+            <a class="text-white" href="https://www.linkedin.com/in/tyler-irving-94b567189/"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            |
+            <a class="text-white" href="mailto:tirving2001@gmail.com"><i class="fas fa-envelope"></i> Email</a>
         </p>
     </div>
+
     <div class="container p-3 mb-5 bg-black rounded">
         <div class="jumbotron">
             <div class="row">
@@ -68,180 +83,158 @@
                 </div>
                 <div class="col-lg-9 col-sm-12">
                     <h1 class="display-4">Tyler Irving</h1>
-                    <p class="lead">Base Camp Coding Academy student and aspiring software engineer.</p>
+                    <p class="lead">RPA Developer & Full Stack Engineer</p>
                     <hr class="my-4">
                     <p>
-                        I am currently enrolled in <a href="https://basecampcodingacademy.org/" target="_blank">Base
-                            Camp
-                            Coding Academy</a> in
-                        Water Valley, Mississippi where I am learning the skills to be a full-stack web
-                        application developer. I have been building my proficiency in Java, Python, Django,
-                        HTML/CSS,
-                        Javascript, Git, SQL, Redis, and PostgreSQL.
+                        RPA Developer specializing in Python automation, full-stack web applications, and algorithmic trading systems. 
+                        Currently building automation solutions at a Navy facility while developing production-grade trading infrastructure.
                     </p>
-                </div>
-
-            </div>
-        </div>
-        <h1 class="text-primary-white">Showcase</h1>
-        <div class="card-columns mb-3">
-            <div class="card border border-light">
-                <div class="card-body">
-                    <h5 class="card-title">My Work</h5>
-                    <p class="card-text">These cards are a collection of my technical experiences as part of
-                        my journey at Base Camp. I have met and been helped by so many wonderful people along the way!
+                    <p>
+                        <strong>Core Skills:</strong> Python, Django, React, TypeScript, API Development, Web Scraping, Automation, WebSockets, PostgreSQL
                     </p>
-                    <p class="card-text">
-
-                    </p>
-                    <p class="card-text"><small class="text-muted">Last updated 25 Feb 2020</small></p>
-                </div>
-            </div>
-            <div class="card border border-light">
-                <img src="./assets/facebook.jpg" class="card-img-top">
-                <div class="card-body">
-                    <small class="text-muted">Base Camp Coding Academy officially sponsored by Facebook</small>
-                </div>
-            </div>
-            <div class="card border border-light ">
-                <div class="card-body">
-                    <h5 class="card-title">Personal Portfolio</h5>
-                    <h6 class="card-title">Created using <strong class="bold">HTML, CSS,</strong> and <strong
-                            class="bold">Bootstrap</strong></h6>
-                    <p class="card-text">Project created at Base Camp Coding Academy using front-end web technology
-                        for
-                        personal work samples.
-                    </p>
-                    <ul class="card-text">
-                        <li>Created a website to cleanly share samples of my work to a diverse audience</li>
-                        <li>Solicited feedback from peers and instructors to improve the website</li>
-                        <li>Overhauled the project by implementing Bootstrap for mobile compatibility</li>
-                        <li>Code directory:
-                            <a href="https://github.com/Tyler-Irving/Tyler-Irving.github.io"
-                                target="_blank">https://github.com/Tyler-Irving/Tyler-Irving.github.io</a></li>
-                    </ul>
-                    <p class="card-text"><small class="text-muted">November 2020</small></p>
-                </div>
-            </div>
-            <div class="card border border-light ">
-                <img src="./assets/Snake-game-screenshot.png" class="card-img-top border border-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Snake</h5>
-                    <h6 class="card-title">Created using <strong class="bold">HTML</strong>, <strong
-                            class="bold">CSS</strong>, and <strong class="bold">JavaScript</strong>.</h6>
-                    <p class="card-text">This was an independent project to test my competency in JavaScipt</p>
-                    <ul class="card-text">
-                        <li>Click <a href="https://tyler-irving.github.io/Snake_game/" target="_blank">here</a> to play!
-                        </li>
-                        <li>Code directory:
-                            <a href="https://github.com/BaseCampCoding/ascent/tree/master/mileage_tracker"
-                                target="_blank">https://github.com/BaseCampCoding/ascent/tree/master/mileage_tracker</a>
-                        </li>
-                    </ul>
-                    <small class="text-muted">
-                        December 2019
-                    </small>
-                </div>
-            </div>
-            <div class="card border border-light ">
-                <img src="./assets/Java_nominations_screenshot.png" class="card-img-top border border-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Java Nomination Benchmark</h5>
-                    <h6 class="card-title">Created using <strong class="bold">Java</strong></h6>
-                    <p class="card-text">Project created at Base Camp Coding Academy to demonstrate mastery of
-                        Java.</p>
-                    <ul class="card-text">
-                        <li>Independent assignment to create an application that fills out the Base Camp student
-                            nomination form
-                        </li>
-                        <li>Increased fluency in creating applications with Java</li>
-                        <li>Code directory:
-                            <a href="https://github.com/Tyler-Irving/java-benchmark-bcca-nomination"
-                                target="_blank">https://github.com/Tyler-Irving/java-benchmark-bcca-nomination</a>
-                        </li>
-                    </ul>
-                    <small class="text-muted">
-                        January 2020
-                    </small>
-                </div>
-            </div>
-            <div class="card border border-light">
-                <img src="./assets/olemiss.png" class="card-img-top">
-                <div class="card-body">
-                    <small class="text-muted">Speakers Edge at The University of Mississippi</small>
-                </div>
-            </div>
-            <div class="card border border-light ">
-                <img src="./assets/ascent.png" class="card-img-top border border-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Ascent: Student Mileage Tracker</h5>
-                    <h6 class="card-title">Created using <strong class="bold">Python</strong> and <strong
-                            class="bold">Django Web Framework</strong>. User Data
-                        is stored using <strong class="bold">PostgreSQL</strong>.
-                    </h6>
-                    <p class="card-text">Project created at Base Camp Coding Academy to demonstrate mastery of the
-                        Django web framework.</p>
-                    <ul class="card-text">
-                        <li>One person team tasked with creating an application to promote classwork for
-                            employers</li>
-                        <li>Participated in morning stand-ups to gauge progress on the process</li>
-                        <li>Increased fluency in creating web applications with class-based Django</li>
-                        <li>Leveraged Agile techniques such as pair programming and continuous integration</li>
-                        <li>Code directory:
-                            <a href="https://github.com/BaseCampCoding/ascent/tree/master/mileage_tracker"
-                                target="_blank">https://github.com/BaseCampCoding/ascent/tree/master/mileage_tracker</a>
-                        </li>
-                    </ul>
-                    <small class="text-muted">
-                        December 2019
-                    </small>
-                </div>
-            </div>
-            <div class="card border border-light">
-                <img src="./assets/cspire.jpg" class="card-img-top">
-                <div class="card-body">
-                    <small class="text-muted">Base Camp class of 2020 visits Cspire</small>
                 </div>
             </div>
         </div>
-        <h1 class="text-primary-white">About Me</h1>
+
+        <h1 class="text-primary-white mb-4">Featured Projects</h1>
+        <div class="row mb-5">
+            <!-- Project 1: Trading Dashboard -->
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card border border-light project-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-chart-line"></i> Kalshi Weather Trading Dashboard</h5>
+                        <p class="card-text">
+                            Production-grade real-time dashboard for algorithmic trading monitoring. Features live position tracking, 
+                            P&L visualization, 27 REST API endpoints, and WebSocket log streaming.
+                        </p>
+                        <div class="mb-3">
+                            <span class="tech-badge">React 19</span>
+                            <span class="tech-badge">TypeScript</span>
+                            <span class="tech-badge">Django 4.2</span>
+                            <span class="tech-badge">WebSockets</span>
+                            <span class="tech-badge">REST API</span>
+                        </div>
+                        <ul class="card-text">
+                            <li>27 REST API endpoints with comprehensive analytics</li>
+                            <li>Real-time log streaming via WebSocket</li>
+                            <li>Win rate analysis, edge calibration, provider accuracy metrics</li>
+                            <li>File-based architecture (no database required)</li>
+                            <li>140KB professional documentation</li>
+                        </ul>
+                        <a href="https://github.com/Tyler-Irving/kalshi-weather-arbitrage-dashboard" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>21,254 lines of code | February 2026</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Trading Daemon -->
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card border border-light project-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-robot"></i> Kalshi Weather Arbitrage Trading Daemon</h5>
+                        <p class="card-text">
+                            Autonomous trading daemon executing weather-based arbitrage on Kalshi markets. Polls 5 forecast providers 
+                            every 15 minutes and executes trades automatically with comprehensive risk management.
+                        </p>
+                        <div class="mb-3">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Asyncio</span>
+                            <span class="tech-badge">API Integration</span>
+                            <span class="tech-badge">Algorithmic Trading</span>
+                            <span class="tech-badge">systemd</span>
+                        </div>
+                        <ul class="card-text">
+                            <li>5-provider ensemble forecasting (NOAA, GFS, ICON, ECMWF, GEM)</li>
+                            <li>Circuit breakers and correlation blocking for risk management</li>
+                            <li>Live production deployment with real capital</li>
+                            <li>Telegram alerts for trades and settlements</li>
+                            <li>Comprehensive JSONL logging for backtesting</li>
+                        </ul>
+                        <a href="https://github.com/Tyler-Irving/kalshi-weather-arbitrage-daemon" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>Running 24/7 in production | February 2026</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="text-primary-white mb-4">Work Experience</h1>
         <div class="p-3 border border-dark mb-4">
-            <p>Before starting at Base Camp Coding Academy, I graduated from Hernando High School in Hernando,
-                Mississippi. During high school, I was involved with multiple extracurricular activities including
-                Student Council Treasurer, Interact Club member, Varsity Football Team, and the Information Technologies
-                program.
-            </p>
-            <p>
-                Joining Base Camp was a life-changing decision. I've learned many lessons from going through
-                Base Camp that I know will help me in my future career. I
-                thoroughly enjoy working in group projects because it allows us to collaborate and bounce ideas off each
-                other when working. My favorite part about Base Camp is the professional guidance from our wonderful
-                instructor Fernae Ellard.
-            </p>
-        </div>
-        <h1 class="text-primary-white">Work Experience</h1>
-        <div class="p-3 border border-dark">
-            <h5>Procurement Team Manager, Base Camp Coding Academy</h5>
-            <p class="mb-0">Water Valley, MS (Jun 2019 - PRESENT) | One out of the four teams inside of Base Camp Coding
-                Academy that teaches students teamwork & leadership
-            </p>
+            <h5><i class="fas fa-briefcase"></i> RPA Developer</h5>
+            <p class="mb-2"><strong>Navy Facility</strong> | Current Position</p>
             <ul>
-                <li>Created a tracking system to manage weekly expenses for the organization</li>
-                <li>Cut costs of organizational spending by 5% while still meeting the needs of students and staff</li>
-                <li>Implemented a functional & cost-savvy inventory system to manage organizational needs</li>
+                <li>Develop Python automation solutions for mission-critical workflows</li>
+                <li>Build and maintain RPA tools reducing manual processing time</li>
+                <li>Integrate with various APIs and legacy systems</li>
+                <li>Create documentation and training materials for automation systems</li>
             </ul>
-            <h5>IT/Production Desk Intern, Future Electronics</h5>
-            <p class="mb-0">Southaven, MS (Oct 2018 - May 2019) | Co-op internship between DeSoto County Career
-                Technology Center-West & Future Electronics to provide insight & experience into a technical career for
-                high school students
-            </p>
+
+            <h5 class="mt-4"><i class="fas fa-users"></i> Procurement Team Manager</h5>
+            <p class="mb-2"><strong>Base Camp Coding Academy</strong> | Water Valley, MS (Jun 2019 - May 2020)</p>
             <ul>
-                <li>Troubleshooting the facilities’ machines (100+) & servers (25+)</li>
-                <li>Maintenance and administration of the automated machines in the warehouse</li>
-                <li>Creation and implementation of an efficient & cost effective inventory system for the IT teams
-                    material needs</li>
+                <li>Created tracking system to manage weekly expenses for the organization</li>
+                <li>Cut organizational spending by 5% while meeting student and staff needs</li>
+                <li>Implemented functional inventory system for organizational management</li>
+            </ul>
+
+            <h5 class="mt-4"><i class="fas fa-server"></i> IT/Production Desk Intern</h5>
+            <p class="mb-2"><strong>Future Electronics</strong> | Southaven, MS (Oct 2018 - May 2019)</p>
+            <ul>
+                <li>Troubleshooting facility machines (100+) and servers (25+)</li>
+                <li>Maintenance and administration of automated warehouse machines</li>
+                <li>Created efficient inventory system for IT team material needs</li>
             </ul>
         </div>
+
+        <h1 class="text-primary-white mb-4">Technical Skills</h1>
+        <div class="p-3 border border-dark mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6><i class="fas fa-code"></i> Languages & Frameworks</h6>
+                    <ul>
+                        <li>Python (Django, FastAPI, asyncio)</li>
+                        <li>JavaScript/TypeScript (React, Node.js)</li>
+                        <li>SQL (PostgreSQL, SQLite)</li>
+                        <li>HTML/CSS (Tailwind, Bootstrap)</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6><i class="fas fa-tools"></i> Tools & Technologies</h6>
+                    <ul>
+                        <li>RPA & Automation (Python, Selenium, BeautifulSoup)</li>
+                        <li>API Development (REST, WebSockets)</li>
+                        <li>DevOps (Git, Docker, systemd, Linux)</li>
+                        <li>Web Scraping & Data Processing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="text-primary-white mb-4">Education</h1>
+        <div class="p-3 border border-dark mb-4">
+            <h5><i class="fas fa-graduation-cap"></i> Base Camp Coding Academy</h5>
+            <p class="mb-2"><strong>Full-Stack Web Development</strong> | Water Valley, MS (2019-2020)</p>
+            <ul>
+                <li>Intensive full-stack development program sponsored by Facebook</li>
+                <li>Proficiency in Python, Django, JavaScript, PostgreSQL, Git</li>
+                <li>Agile development, pair programming, continuous integration</li>
+            </ul>
+        </div>
+
+        <footer class="text-center mt-5 mb-3">
+            <p class="text-muted">
+                <small>Last updated February 2026 | Built with Bootstrap | 
+                <a href="https://github.com/Tyler-Irving/Tyler-Irving.github.io">View Source</a></small>
+            </p>
+        </footer>
+    </div>
 </body>
 
 </html>
