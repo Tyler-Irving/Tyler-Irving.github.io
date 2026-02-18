@@ -85,6 +85,86 @@
         body {
             padding-top: 60px;
         }
+
+        /* Professional carousel styling */
+        .dashboard-carousel {
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-carousel .carousel-inner {
+            background-color: #1a1a1a;
+        }
+
+        .dashboard-carousel .carousel-item img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 500px;
+            background-color: #1a1a1a;
+        }
+
+        /* Enhanced carousel controls */
+        .dashboard-carousel .carousel-control-prev,
+        .dashboard-carousel .carousel-control-next {
+            width: 8%;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .dashboard-carousel .carousel-control-prev:hover,
+        .dashboard-carousel .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+        .dashboard-carousel .carousel-control-prev-icon,
+        .dashboard-carousel .carousel-control-next-icon {
+            width: 2rem;
+            height: 2rem;
+            background-color: rgba(0, 123, 255, 0.9);
+            border-radius: 50%;
+            padding: 0.5rem;
+        }
+
+        /* Indicators styling */
+        .dashboard-carousel .carousel-indicators {
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-carousel .carousel-indicators li {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            margin: 0 4px;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-carousel .carousel-indicators li.active {
+            background-color: #007bff;
+            transform: scale(1.2);
+        }
+
+        /* Smooth transitions */
+        .dashboard-carousel .carousel-item {
+            transition: transform 0.6s ease-in-out;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .dashboard-carousel .carousel-item img {
+                max-height: 300px;
+            }
+            
+            .dashboard-carousel .carousel-control-prev-icon,
+            .dashboard-carousel .carousel-control-next-icon {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
     </style>
     
     <!-- Structured Data (JSON-LD) -->
@@ -192,16 +272,16 @@
                         </a>
                     </div>
                     <!-- Dashboard Screenshots -->
-                    <div id="kalshiCarousel" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#kalshiCarousel" data-bs-slide-to="0" class="active"></button>
-                            <button type="button" data-bs-target="#kalshiCarousel" data-bs-slide-to="1"></button>
-                            <button type="button" data-bs-target="#kalshiCarousel" data-bs-slide-to="2"></button>
-                            <button type="button" data-bs-target="#kalshiCarousel" data-bs-slide-to="3"></button>
-                            <button type="button" data-bs-target="#kalshiCarousel" data-bs-slide-to="4"></button>
-                            <button type="button" data-bs-target="#kalshiCarousel" data-bs-slide-to="5"></button>
-                            <button type="button" data-bs-target="#kalshiCarousel" data-bs-slide-to="6"></button>
-                        </div>
+                    <div id="kalshiCarousel" class="carousel slide dashboard-carousel" data-ride="carousel" data-interval="false">
+                        <ol class="carousel-indicators">
+                            <li data-target="#kalshiCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#kalshiCarousel" data-slide-to="1"></li>
+                            <li data-target="#kalshiCarousel" data-slide-to="2"></li>
+                            <li data-target="#kalshiCarousel" data-slide-to="3"></li>
+                            <li data-target="#kalshiCarousel" data-slide-to="4"></li>
+                            <li data-target="#kalshiCarousel" data-slide-to="5"></li>
+                            <li data-target="#kalshiCarousel" data-slide-to="6"></li>
+                        </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <img src="images/kalshi-dashboard/kalshi-1.png" class="d-block w-100" alt="Kalshi Dashboard - Overview">
@@ -225,14 +305,14 @@
                                 <img src="images/kalshi-dashboard/kalshi-7.png" class="d-block w-100" alt="Kalshi Dashboard - Settings">
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#kalshiCarousel" data-bs-slide="prev">
+                        <a class="carousel-control-prev" href="#kalshiCarousel" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#kalshiCarousel" data-bs-slide="next">
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#kalshiCarousel" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                     <div class="card-footer text-muted">
                         <small>21,254 lines of code | February 2026</small>
