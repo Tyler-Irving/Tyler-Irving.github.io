@@ -96,13 +96,13 @@
 
         .dashboard-carousel .carousel-inner {
             background-color: #1a1a1a;
+            height: 500px;
         }
 
         .dashboard-carousel .carousel-item img {
             width: 100%;
-            height: auto;
+            height: 500px;
             object-fit: contain;
-            max-height: 500px;
             background-color: #1a1a1a;
         }
 
@@ -155,8 +155,12 @@
 
         /* Mobile responsive */
         @media (max-width: 768px) {
+            .dashboard-carousel .carousel-inner {
+                height: 300px;
+            }
+            
             .dashboard-carousel .carousel-item img {
-                max-height: 300px;
+                height: 300px;
             }
             
             .dashboard-carousel .carousel-control-prev-icon,
