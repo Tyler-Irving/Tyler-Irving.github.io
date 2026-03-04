@@ -1,0 +1,210 @@
+---
+import ProjectCard from './ProjectCard.astro';
+
+const projects = [
+  {
+    id: 'where-is-my-data',
+    title: 'Where is my data?',
+    icon: '🔍',
+    oneliner: '181 datacenters. 43 cloud providers. Latency estimation. All on one map.',
+    description:
+      'Interactive globe visualizing 181 cloud and colocation datacenters across AWS, Azure, GCP, Equinix, Digital Realty, Cloudflare, and 40+ other providers. Filter by provider type, estimate round-trip latency with a Haversine + fiber routing model, compare cloud pricing across 33 regions, and export filtered results as CSV or JSON.',
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Mapbox GL JS', 'Zustand', 'Tailwind CSS 4', 'Vercel'],
+    github: 'https://github.com/Tyler-Irving/where-is-my-data',
+    stats: [
+      { label: 'Datacenters', value: '181' },
+      { label: 'Providers', value: '43' },
+      { label: 'Pricing Regions', value: '33' },
+    ],
+    decisions: [
+      'Zustand with 6 stores (datacenter, filter, map, comparison, latency, pricing) — no Redux boilerplate',
+      'Latency uses Haversine + 1.3x fiber overhead + hop decay + 15% congestion buffer — fully offline, no live ping',
+      'Uncontrolled Mapbox pattern — flyTo/setMaxBounds called imperatively via mapRef to avoid animation choppiness',
+      'Shareable URLs via custom useUrlSync hook with 500ms debounce — encodes filters, viewport, and selected datacenter into query params',
+    ],
+    footer: 'Deployed on Vercel | 2026',
+  },
+  {
+    id: 'kalshi-dashboard',
+    title: 'Weather Arbitrage Dashboard',
+    icon: '📈',
+    oneliner: 'Real-time P&L, live log streaming, and 34 analytics endpoints for the trading daemon.',
+    description:
+      'Full-stack monitoring dashboard for the Kalshi weather arbitrage daemon. Reads structured JSON/JSONL files written by the daemon, streams live logs over WebSockets, and renders sortable position tables, P&L charts, and backtest analysis. 34 analytics endpoints cover win rates, edge calibration, provider accuracy, and cost efficiency.',
+    tech: ['React 19', 'TypeScript', 'Vite 6', 'Tailwind CSS 4', 'Zustand', 'Recharts', 'Django 4.2', 'Django Channels', 'Daphne (ASGI)', 'Django REST Framework'],
+    github: 'https://github.com/Tyler-Irving/kalshi-weather-arbitrage-dashboard',
+    stats: [
+      { label: 'Analytics Endpoints', value: '34' },
+      { label: 'Live Log Streaming', value: 'WebSockets' },
+      { label: 'Frontend Polling', value: 'Every 10s' },
+    ],
+    decisions: [
+      'File-reader architecture — no database; Django reads daemon-produced JSON/JSONL on every request for always-fresh data',
+      'Django Channels + Daphne for ASGI — WebSockets handle live log streaming, HTTP handles all structured data',
+      'Zustand (1KB) over Redux — 2 stores, full TypeScript inference, zero boilerplate',
+      'Exponential backoff WebSocket reconnect (1s → 2s → 4s → max 30s) on the React client',
+    ],
+    images: [
+      'images/kalshi-dashboard/kalshi-1.png',
+      'images/kalshi-dashboard/kalshi-2.png',
+      'images/kalshi-dashboard/kalshi-3.png',
+      'images/kalshi-dashboard/kalshi-4.png',
+      'images/kalshi-dashboard/kalshi-5.png',
+      'images/kalshi-dashboard/kalshi-6.png',
+      'images/kalshi-dashboard/kalshi-7.png',
+    ],
+    footer: 'Full-stack dashboard | February 2026',
+  },
+  {
+    id: 'kalshi-daemon',
+    title: 'Weather Arbitrage Daemon',
+    icon: '⚡',
+    oneliner: 'Five ensemble models. Bayesian blending. Quarter-Kelly sizing. Running 24/7.',
+    description:
+      'Autonomous Python daemon that identifies and trades mispriced temperature contracts across 11 US cities on the Kalshi prediction market. Blends forecasts from NOAA, GFS, ICON/DWD, ECMWF, and GEM using Bayesian log-odds at 30/70 model/market weighting, sizes positions with Quarter-Kelly criterion, and enforces circuit breakers at daily and weekly loss limits.',
+    tech: ['Python', 'Kalshi API v2 (RSA-PSS)', 'NOAA', 'Open-Meteo (GFS/ICON/ECMWF/GEM)', 'Bayesian Probability', 'Quarter-Kelly Sizing', 'Telegram Bot API'],
+    github: 'https://github.com/Tyler-Irving/kalshi-weather-arbitrage-daemon',
+    stats: [
+      { label: 'Ensemble Models', value: '5' },
+      { label: 'Cities Covered', value: '11' },
+      { label: 'Poll Interval', value: '15 min' },
+      { label: 'Max Open Positions', value: '20' },
+    ],
+    decisions: [
+      'Bayesian log-odds blending at 30% model / 70% market weighting — inverse-transformed back to probability space per trade',
+      'Quarter-Kelly criterion for position sizing from live edge and current bankroll — not a fixed fraction',
+      'RSA-PSS SHA256 signing for all Kalshi API calls using PEM private key — not API-key-only auth',
+      'Geography-based correlation groups (Gulf South, Northeast, Pacific) cap correlated exposure',
+      'Circuit breakers halt all trading at $5 daily / $10 weekly loss — daemon stops, does not just skip individual trades',
+    ],
+    footer: 'Running 24/7 in production | February 2026',
+  },
+  {
+    id: 'crypto-bot',
+    title: 'Crypto Trading Bot',
+    icon: '₿',
+    oneliner: 'Five signals. Composite scoring. Ten pairs. Limit buys. Zero babysitting.',
+    description:
+      'Automated cryptocurrency trading daemon for Coinbase Advanced Trade API. Scores each of 10 pairs on a 0–100 composite signal scale using RSI-14, MACD, EMA-12/26, volume spikes, and support-bounce analysis. Places limit buys 0.1% below market and market sells for stop-loss exits. 30-second polling loop with Telegram alerts and JSON portfolio state.',
+    tech: ['Python', 'Coinbase Advanced Trade API', 'RSI-14', 'MACD', 'EMA-12/26', 'Telegram Bot API'],
+    github: 'https://github.com/Tyler-Irving/crypto-daemon',
+    stats: [
+      { label: 'Trading Pairs', value: '10' },
+      { label: 'Signals', value: '5 composite' },
+      { label: 'Polling Interval', value: '30s' },
+      { label: 'Max Position', value: '$50 USD' },
+    ],
+    decisions: [
+      'Composite 0–100 scoring gate — buys only trigger at ≥50 points to filter weak signals',
+      'All indicators (RSI-14, EMA-12/26, MACD) implemented from scratch in pure Python — zero pandas or numpy',
+      'Limit buys placed 0.1% below market for maker-fee advantage; market sells used only for stop-loss to guarantee fills',
+      'Max 5 concurrent positions, 30-minute per-pair cooldown, 40% balance cap per trade enforced before any buy',
+    ],
+    footer: 'Live trading deployment | February 2026',
+  },
+  {
+    id: 'file-to-api',
+    title: 'File-to-API Platform',
+    icon: '⚙️',
+    oneliner: 'Drop a CSV. Get a REST API with auth, pagination, and Swagger docs. Done in seconds.',
+    description:
+      "Upload a CSV or Excel file and get a fully functional REST API instantly. Django parses the file with pandas, infers column types at a 90% match threshold, creates a SQLite table dynamically at runtime using Python's type() constructor, and registers DRF ViewSets and URL routes without a server restart. Full CRUD, API key auth, rate limiting, and OpenAPI/Swagger docs included.",
+    tech: ['Django 4.2', 'Django REST Framework', 'React 19', 'TypeScript', 'Vite 7', 'Tailwind CSS 4', 'pandas', 'drf-spectacular (OpenAPI 3.0)'],
+    github: 'https://github.com/Tyler-Irving/file-to-api',
+    stats: [
+      { label: 'Upload → Live API', value: '< 5s' },
+      { label: 'Rate Limit (reads)', value: '1,000/hr' },
+      { label: 'Max Upload', value: '10 MB' },
+    ],
+    decisions: [
+      "Dynamic model generation at runtime via Python's type() constructor — no code generation, no server restart on upload",
+      'Runtime DRF router registration — ViewSets and URL routes injected into live URL conf without touching urls.py',
+      'SHA-256 + salt API key hashing with 8-char plaintext prefix for O(1) lookup — format: fta_{prefix}_{secret}',
+      '90% type-match threshold for schema inference — columns only typed as int/float/date if 90%+ of non-null values match',
+      'python-magic for MIME type validation — blocks malicious uploads regardless of file extension',
+    ],
+    images: [
+      'images/file-to-api/fileapi-1.png',
+      'images/file-to-api/fileapi-2.png',
+      'images/file-to-api/fileapi-3.png',
+      'images/file-to-api/fileapi-4.png',
+      'images/file-to-api/fileapi-5.png',
+      'images/file-to-api/fileapi-6.png',
+      'images/file-to-api/fileapi-7.png',
+    ],
+    footer: 'Full-stack platform | February 2026',
+  },
+] as const;
+---
+
+<section id="projects" class="projects-section">
+  <div class="container">
+    <span class="section-label">Selected Work</span>
+    <h2 class="section-heading">Things I shipped.</h2>
+
+    <div class="projects-grid">
+      {
+        projects.map((project, i) => (
+          <div class={`grid-item${i === 0 ? ' grid-item--full' : ''}`}>
+            <ProjectCard {...project} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    padding-block: var(--section-gap);
+  }
+
+  /* Section heading */
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* Grid layout */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* First card spans full width */
+  .grid-item--full {
+    grid-column: 1 / -1;
+  }
+
+  /* All other items: normal column span */
+  .grid-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Make the card fill its grid cell height */
+  .grid-item > :global(.project-card) {
+    flex: 1;
+  }
+
+  /* Responsive: single column on mobile */
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .grid-item--full {
+      grid-column: 1;
+    }
+
+    .section-heading {
+      margin-bottom: 2rem;
+    }
+  }
+</style>

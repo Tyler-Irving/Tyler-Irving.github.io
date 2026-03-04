@@ -1,0 +1,274 @@
+---
+// Hero.astro
+---
+
+<section class="hero" id="hero" aria-label="Introduction">
+  <div class="container hero-container">
+
+    <!-- Left: Text content -->
+    <div class="hero-left">
+      <span class="hero-label" id="hero-label">Senior RPA Developer &middot; Secret Clearance</span>
+
+      <h1 class="hero-name" id="hero-name">Tyler Irving</h1>
+
+      <p class="hero-tagline" id="hero-tagline">
+        I automate the work that kills productivity.
+      </p>
+
+      <hr class="hero-rule" id="hero-rule" aria-hidden="true" />
+
+      <div class="hero-tags" id="hero-tags">
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">UiPath</span>
+        <span class="tech-badge">Live Trading</span>
+      </div>
+
+      <div class="hero-ctas" id="hero-ctas">
+        <a href="#projects" class="btn-primary">View Work &rarr;</a>
+        <a
+          href="https://github.com/Tyler-Irving"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-ghost"
+        >GitHub &nearr;</a>
+        <a
+          href="https://www.linkedin.com/in/tyler-irving-94b567189/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-ghost"
+        >LinkedIn &nearr;</a>
+      </div>
+    </div>
+
+    <!-- Right: Avatar -->
+    <div class="hero-right" id="hero-avatar">
+      <div class="avatar-wrap">
+        <div class="avatar-glow" aria-hidden="true"></div>
+        <img
+          src="/assets/tyler-irving.jpg"
+          alt="Tyler Irving"
+          class="avatar-img"
+          width="280"
+          height="280"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Hero layout ──────────────────────────────────────────── */
+  .hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-block: clamp(4rem, 10vh, 7rem);
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  /* ── Left column ──────────────────────────────────────────── */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .hero-tagline {
+    font-family: var(--font-body);
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 42ch;
+  }
+
+  .hero-rule {
+    width: 80px;
+    height: 2px;
+    background: var(--accent);
+    border: none;
+    margin: 0;
+    border-radius: 2px;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Right column ─────────────────────────────────────────── */
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .avatar-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .avatar-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+    filter: blur(16px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .avatar-img {
+    position: relative;
+    z-index: 1;
+    width: clamp(180px, 25vw, 280px);
+    height: clamp(180px, 25vw, 280px);
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    transition:
+      border-color var(--transition),
+      box-shadow var(--transition),
+      transform var(--transition);
+    display: block;
+  }
+
+  .avatar-img:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 32px rgba(124, 58, 237, 0.35);
+    transform: scale(1.02);
+  }
+
+  /* ── Initial opacity — GSAP animates these in ─────────────── */
+  #hero-label,
+  #hero-name,
+  #hero-tagline,
+  #hero-rule,
+  #hero-tags,
+  #hero-ctas,
+  #hero-avatar {
+    opacity: 0;
+  }
+
+  /* ── Mobile ───────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-right {
+      order: -1;
+    }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+  import Lenis from 'lenis';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Smooth scroll ────────────────────────────────────────────
+  const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  // Keep ScrollTrigger in sync with Lenis's virtual scroll position
+  lenis.on('scroll', () => ScrollTrigger.update());
+
+  // ── Hero entrance animation ──────────────────────────────────
+  // Use gsap.set() + gsap.to() — NOT gsap.from().
+  // gsap.from() animates TO the element's natural CSS state. Since the CSS
+  // has opacity:0 on hero elements, gsap.from({ opacity:0 }) would animate
+  // opacity:0 → opacity:0 and elements would stay invisible.
+  function animateHeroIn() {
+    // Establish "from" positions explicitly
+    gsap.set(
+      ['#hero-label', '#hero-name', '#hero-tagline', '#hero-rule', '#hero-tags', '#hero-ctas'],
+      { y: 30, opacity: 0 }
+    );
+    gsap.set('#hero-avatar', { x: 40, opacity: 0 });
+
+    const tl = gsap.timeline();
+
+    tl.to('#hero-label',   { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' })
+      .to('#hero-name',    { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.45')
+      .to('#hero-tagline', { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.45')
+      .to('#hero-rule',    { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.4')
+      .to('#hero-tags',    { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .to('#hero-ctas',    { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .to('#hero-avatar',  { x: 0,  opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.5')
+      .add(() => ScrollTrigger.refresh()); // Refresh after hero is in place
+  }
+
+  // If revisiting (terminal already played), animate immediately
+  if (sessionStorage.getItem('booted') === 'true') {
+    animateHeroIn();
+  } else {
+    // Wait for terminal boot to signal completion
+    document.addEventListener('bootComplete', () => {
+      sessionStorage.setItem('booted', 'true');
+      animateHeroIn();
+    });
+  }
+
+  // ── Scroll reveals — applies to ALL [data-animate="fadeUp"] ──
+  // Use gsap.set first so elements are invisible before ScrollTrigger registers,
+  // then gsap.to() animates them in — avoids immediateRender flicker.
+  gsap.utils.toArray<Element>('[data-animate="fadeUp"]').forEach((el) => {
+    gsap.set(el, { y: 40, opacity: 0 });
+    gsap.to(el, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 90%',
+        once: true,
+      },
+    });
+  });
+
+  // Refresh after all triggers are registered
+  ScrollTrigger.refresh();
+</script>

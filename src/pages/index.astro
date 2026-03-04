@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TerminalBoot from '../components/TerminalBoot.astro';
+import Cursor from '../components/Cursor.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Projects from '../components/Projects.astro';
+import WorkExperience from '../components/WorkExperience.astro';
+import Skills from '../components/Skills.astro';
+---
+
+<Layout>
+  <Cursor />
+  <TerminalBoot />
+  <Nav />
+  <main>
+    <Hero />
+    <Projects />
+    <WorkExperience />
+    <Skills />
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        <span class="mono">tyler-irving.github.io</span>
+        &nbsp;·&nbsp; Built with Astro
+        &nbsp;·&nbsp;
+        <a
+          href="https://github.com/Tyler-Irving/Tyler-Irving.github.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-link"
+        >
+          Source
+        </a>
+      </p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .site-footer {
+    padding-block: 2.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 6rem;
+  }
+
+  .site-footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .site-footer p {
+    font-size: 0.8125rem;
+    color: var(--text-faint);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .site-footer .mono {
+    color: var(--text-muted);
+  }
+
+  .footer-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--transition);
+    border-bottom: 1px solid transparent;
+  }
+
+  .footer-link:hover {
+    color: var(--accent-light);
+    border-bottom-color: var(--accent-light);
+  }
+</style>

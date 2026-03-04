@@ -1,0 +1,210 @@
+---
+// Nav.astro
+// Floating pill navigation, fixed at top center.
+// Hides on scroll-down past 100px, shows on scroll-up.
+// Active link tracks current section via IntersectionObserver.
+---
+
+<nav class="floating-nav" aria-label="Site navigation">
+  <a href="#projects" class="nav-link">Projects</a>
+  <span class="nav-dot" aria-hidden="true">·</span>
+  <a href="#work" class="nav-link">Work</a>
+  <span class="nav-dot" aria-hidden="true">·</span>
+  <a href="#skills" class="nav-link">Skills</a>
+</nav>
+
+<style>
+  .floating-nav {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 24px;
+
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(8, 8, 8, 0.72);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
+
+    /* GSAP will override this transform for show/hide, so we keep a
+       translateX baseline. GSAP accounts for existing transforms via
+       the xPercent property instead. */
+  }
+
+  .nav-link {
+    display: inline-block;
+    padding: 4px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 999px;
+    transition: color var(--transition), background var(--transition);
+    will-change: transform;
+  }
+
+  .nav-link:hover {
+    color: var(--text);
+    transform: scale(1.05);
+  }
+
+  .nav-link.active {
+    color: var(--accent);
+  }
+
+  .nav-dot {
+    color: var(--text-faint);
+    font-size: 1rem;
+    line-height: 1;
+    user-select: none;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const nav = document.querySelector<HTMLElement>('.floating-nav');
+  const links = document.querySelectorAll<HTMLAnchorElement>('.nav-link');
+
+  if (!nav) throw new Error('Nav element not found');
+
+  // ----------------------------------------------------------------
+  // Smooth scroll on link click
+  // ----------------------------------------------------------------
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      if (!href) return;
+      const target = document.querySelector<HTMLElement>(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ----------------------------------------------------------------
+  // Hide / show on scroll direction
+  // ----------------------------------------------------------------
+  let lastScrollY = window.scrollY;
+  let isHidden = false;
+
+  // GSAP manages yPercent so we don't fight the CSS translateX(-50%).
+  // We set xPercent once so GSAP uses that internally.
+  gsap.set(nav, { xPercent: -50, yPercent: 0 });
+
+  // Correct the CSS transform after GSAP takes over (avoid double translate)
+  nav.style.transform = '';
+  nav.style.left = '50%';
+
+  function showNav() {
+    if (!isHidden) return;
+    isHidden = false;
+    gsap.to(nav, {
+      yPercent: 0,
+      opacity: 1,
+      duration: 0.45,
+      ease: 'power3.out',
+    });
+  }
+
+  function hideNav() {
+    if (isHidden) return;
+    isHidden = true;
+    gsap.to(nav, {
+      yPercent: -200,
+      opacity: 0,
+      duration: 0.35,
+      ease: 'power3.in',
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    const scrollingDown = currentScrollY > lastScrollY;
+
+    if (scrollingDown && currentScrollY > 100) {
+      hideNav();
+    } else {
+      showNav();
+    }
+
+    lastScrollY = currentScrollY;
+  }, { passive: true });
+
+  // ----------------------------------------------------------------
+  // Active link tracking via IntersectionObserver
+  // ----------------------------------------------------------------
+  const sectionIds = ['projects', 'work', 'skills'];
+  const sectionMap = new Map<string, HTMLElement>();
+
+  sectionIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) sectionMap.set(id, el);
+  });
+
+  function setActiveLink(activeId: string | null) {
+    links.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href === `#${activeId}`) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // Track which sections are currently intersecting
+  const intersecting = new Set<string>();
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.id;
+        if (entry.isIntersecting) {
+          intersecting.add(id);
+        } else {
+          intersecting.delete(id);
+        }
+      });
+
+      // Prefer the first section (in DOM order) that is currently visible
+      let active: string | null = null;
+      for (const id of sectionIds) {
+        if (intersecting.has(id)) {
+          active = id;
+          break;
+        }
+      }
+
+      setActiveLink(active);
+    },
+    {
+      // Trigger when section occupies >=20% of viewport
+      threshold: 0.2,
+      rootMargin: '-10% 0px -10% 0px',
+    }
+  );
+
+  sectionMap.forEach((el) => observer.observe(el));
+
+  // ----------------------------------------------------------------
+  // Hover: scale via GSAP for extra smoothness
+  // ----------------------------------------------------------------
+  links.forEach((link) => {
+    link.addEventListener('mouseenter', () => {
+      gsap.to(link, { scale: 1.05, duration: 0.2, ease: 'power2.out' });
+    });
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, { scale: 1, duration: 0.2, ease: 'power2.out' });
+    });
+  });
+</script>

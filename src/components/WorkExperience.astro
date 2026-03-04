@@ -1,0 +1,300 @@
+---
+// WorkExperience.astro
+---
+
+<section id="work" class="work-section">
+  <div class="container">
+    <span class="section-label">Career</span>
+    <h2 class="section-heading">Where I've shipped.</h2>
+
+    <div class="work-timeline">
+
+      <!-- Baker Tilly -->
+      <article class="role-card" data-animate="fadeUp">
+        <div class="role-card-inner">
+          <div class="role-header">
+            <div class="role-header-left">
+              <span class="company-name">Baker Tilly</span>
+              <div class="role-title-row">
+                <span class="role-title">Senior RPA Developer &amp; Automation Consultant</span>
+                <span class="clearance-badge">Secret Clearance</span>
+              </div>
+            </div>
+            <span class="role-dates">Aug 2025 &ndash; Present</span>
+          </div>
+          <p class="role-tagline">Modernizing how the Navy processes 2 million fitness reports a year.</p>
+          <ul class="role-bullets">
+            <li>Leading a 3-dev team building end-to-end UiPath automation (Studio, Orchestrator, Document Understanding) for E1&ndash;E4 sailor fitness evaluation processing</li>
+            <li>Training custom ML models in UiPath AI Center for high-accuracy extraction from diverse PDF formats and legacy Navy docs</li>
+            <li>Automation projected to save the Navy millions annually in personnel costs</li>
+            <li>Working directly with Navy stakeholders inside Secret-level security requirements</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ONeil Interactive -->
+      <article class="role-card" data-animate="fadeUp">
+        <div class="role-card-inner">
+          <div class="role-header">
+            <div class="role-header-left">
+              <span class="company-name">ONeil Interactive</span>
+              <div class="role-title-row">
+                <span class="role-title">Senior Backend Engineer</span>
+              </div>
+            </div>
+            <span class="role-dates">Jan 2024 &ndash; Aug 2025 &middot; 1yr 8mo</span>
+          </div>
+          <p class="role-tagline">Backend infrastructure for high-traffic platforms serving the residential homebuilding industry.</p>
+          <ul class="role-bullets">
+            <li>Built and maintained scalable backend systems in Python/Django/DRF for homebuilder marketing platforms</li>
+            <li>Led development of Homefiniti CMS &mdash; clients' primary tool for managing property data at scale</li>
+            <li>Modernized legacy MLS data integrations, replacing brittle code with clean, maintainable patterns</li>
+            <li>Upgraded legacy Python/Django codebases to current versions, improving security and performance</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Lightmatter -->
+      <article class="role-card" data-animate="fadeUp">
+        <div class="role-card-inner">
+          <div class="role-header">
+            <div class="role-header-left">
+              <span class="company-name">Lightmatter</span>
+              <div class="role-title-row">
+                <span class="role-title">Software Engineer</span>
+              </div>
+            </div>
+            <span class="role-dates">Jan 2022 &ndash; Jan 2024 &middot; 2yrs</span>
+          </div>
+          <p class="role-tagline">Full-stack engineering in healthtech &mdash; HIPAA-compliant features shipped in a fast Agile environment.</p>
+          <ul class="role-bullets">
+            <li>Built a voice-to-text AI pipeline: OpenAI Whisper &rarr; fine-tuned BART classifier &rarr; GPT-3.5-Turbo structured output</li>
+            <li>Architected patient email automation using live EHR/EMR data for targeted, automated outreach</li>
+            <li>Led React Native and HTMX frontend work alongside Django/DRF/FastAPI backend development</li>
+            <li>Delivered across GCP, Heroku, Docker, Postgres stack with full ownership end-to-end</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- C Spire -->
+      <article class="role-card" data-animate="fadeUp">
+        <div class="role-card-inner">
+          <div class="role-header">
+            <div class="role-header-left">
+              <span class="company-name">C Spire</span>
+              <div class="role-title-row">
+                <span class="role-title">Jr. Software Developer</span>
+              </div>
+            </div>
+            <span class="role-dates">Aug 2020 &ndash; Jan 2022 &middot; 1yr 7mo</span>
+          </div>
+          <p class="role-tagline">Started here. Shipped a core internal platform and migrated Perl to Django before the end of my first year.</p>
+          <ul class="role-bullets">
+            <li>Built Django platform for phone call management &mdash; query, share, and modify telecom rate center inventory reports</li>
+            <li>Led end-to-end development of customer data usage tracking app for billing cycle support</li>
+            <li>Migrated legacy Perl tools to Django with redesigned frontends &mdash; cleaner code, better UX</li>
+            <li>Operated in full Agile lifecycle: standups, sprint planning, retros</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section chrome ───────────────────────────────────────── */
+  .work-section {
+    padding-block: var(--section-gap);
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── Timeline ─────────────────────────────────────────────── */
+  .work-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-left: 2rem;
+  }
+
+  /* Vertical connecting line */
+  .work-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0.35;
+    border-radius: 2px;
+  }
+
+  /* ── Role card ────────────────────────────────────────────── */
+  .role-card {
+    position: relative;
+  }
+
+  /* Dot on the timeline line */
+  .role-card::before {
+    content: '';
+    position: absolute;
+    left: -2.4375rem;
+    top: 1.35rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+    z-index: 1;
+  }
+
+  .role-card-inner {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.75rem 1.75rem 2rem;
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  }
+
+  .role-card-inner:hover {
+    border-color: var(--border-hover);
+    border-left-color: var(--accent-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  /* ── Header row ───────────────────────────────────────────── */
+  .role-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .role-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .company-name {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .role-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+
+  .role-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent-light);
+    letter-spacing: -0.01em;
+  }
+
+  .clearance-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    background: var(--accent);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .role-dates {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* ── Body copy ────────────────────────────────────────────── */
+  .role-tagline {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .role-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .role-bullets li {
+    position: relative;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .role-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  /* ── Mobile ───────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .work-timeline {
+      padding-left: 1.5rem;
+    }
+
+    .role-card::before {
+      left: -1.9375rem;
+    }
+
+    .role-header {
+      flex-direction: column;
+    }
+
+    .role-dates {
+      margin-top: 0;
+    }
+
+    .role-card-inner {
+      padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    }
+  }
+</style>

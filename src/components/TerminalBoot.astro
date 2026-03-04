@@ -1,0 +1,203 @@
+---
+// TerminalBoot.astro
+// Full-screen terminal boot overlay.
+// Skipped if sessionStorage 'booted' === 'true'.
+// Dispatches 'bootComplete' event on fade-out.
+---
+
+<div class="boot-overlay" id="boot-overlay" aria-hidden="true">
+  <div class="boot-terminal" role="status" aria-live="polite" aria-label="Portfolio loading">
+    <div class="boot-line" id="boot-line-0">
+      <span class="prompt">$</span>
+      <span class="cmd"> tyler --init</span>
+    </div>
+    <div class="boot-line" id="boot-line-1">
+      <span class="prefix">&gt;</span>
+      <span class="label"> clearance</span>
+      <span class="dots">............</span>
+      <span class="value">SECRET</span>
+      <span class="spaces">    </span>
+      <span class="ok">[OK]</span>
+    </div>
+    <div class="boot-line" id="boot-line-2">
+      <span class="prefix">&gt;</span>
+      <span class="label"> algo-trading</span>
+      <span class="dots">..........</span>
+      <span class="value">LIVE</span>
+      <span class="spaces">     </span>
+      <span class="ok">[OK]</span>
+    </div>
+    <div class="boot-line" id="boot-line-3">
+      <span class="prefix">&gt;</span>
+      <span class="label"> portfolio</span>
+      <span class="dots">..........</span>
+      <span class="value">LOADING</span>
+      <span class="spaces">     </span>
+      <span class="ok">[OK]</span>
+      <span class="cursor-blink" id="boot-cursor">&#9608;</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .boot-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #080808;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .boot-terminal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 40px 48px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    background: rgba(20, 20, 20, 0.6);
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+    min-width: 420px;
+  }
+
+  .boot-line {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    white-space: pre;
+    /* Lines start invisible; GSAP reveals them */
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+
+  /* Prompt: violet accent */
+  .prompt {
+    color: #7c3aed;
+    font-weight: 600;
+  }
+
+  /* Command text: bright white */
+  .cmd {
+    color: #f0f0f0;
+  }
+
+  /* ">" prefix: muted */
+  .prefix {
+    color: #888888;
+  }
+
+  /* Label portion: bright text */
+  .label {
+    color: #f0f0f0;
+  }
+
+  /* Dots: muted */
+  .dots {
+    color: #888888;
+  }
+
+  /* Value keyword: slightly dimmed */
+  .value {
+    color: #cccccc;
+  }
+
+  /* Spacing helper */
+  .spaces {
+    color: transparent;
+    user-select: none;
+  }
+
+  /* [OK] badge: green */
+  .ok {
+    color: #22c55e;
+    font-weight: 600;
+  }
+
+  /* Blinking block cursor */
+  .cursor-blink {
+    color: #7c3aed;
+    animation: blink 0.8s step-end infinite;
+    display: inline-block;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const overlay = document.getElementById('boot-overlay') as HTMLElement | null;
+
+  // Skip if already booted in this session
+  if (!overlay || sessionStorage.getItem('booted') === 'true') {
+    if (overlay) overlay.style.display = 'none';
+    // Still dispatch so listeners initialise correctly on return visits
+    document.dispatchEvent(new CustomEvent('bootComplete'));
+  } else {
+    const lines = [
+      document.getElementById('boot-line-0'),
+      document.getElementById('boot-line-1'),
+      document.getElementById('boot-line-2'),
+      document.getElementById('boot-line-3'),
+    ].filter(Boolean) as HTMLElement[];
+
+    const cursor = document.getElementById('boot-cursor') as HTMLElement | null;
+
+    // Hide cursor until last line is visible
+    if (cursor) gsap.set(cursor, { opacity: 0 });
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        // 300ms pause, then dissolve
+        gsap.delayedCall(0.3, () => {
+          // Stop cursor blink animation before fade
+          if (cursor) cursor.style.animation = 'none';
+
+          gsap.to(overlay, {
+            opacity: 0,
+            duration: 0.5,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              overlay.style.display = 'none';
+              sessionStorage.setItem('booted', 'true');
+              document.dispatchEvent(new CustomEvent('bootComplete'));
+            },
+          });
+        });
+      },
+    });
+
+    // Reveal each line with a clip-path sweep + opacity
+    // Stagger: line 0 at 0s, each subsequent line ~0.28s later
+    // Total reveal ~1.1s, leaving room for the 300ms pause + 500ms fade = ~1.9s total
+    lines.forEach((line, i) => {
+      const isLast = i === lines.length - 1;
+      const startTime = i * 0.28;
+
+      tl.to(
+        line,
+        {
+          opacity: 1,
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.22,
+          ease: 'power2.out',
+          onComplete: isLast
+            ? () => {
+                // Show blinking cursor after last line reveals
+                if (cursor) {
+                  gsap.set(cursor, { opacity: 1 });
+                  cursor.style.animation = 'blink 0.8s step-end infinite';
+                }
+              }
+            : undefined,
+        },
+        startTime
+      );
+    });
+  }
+</script>

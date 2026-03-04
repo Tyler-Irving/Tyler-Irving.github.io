@@ -1,0 +1,164 @@
+---
+// Cursor.astro
+// Custom cursor: dot + trailing ring, GSAP quickTo tracking.
+// Elements are created and appended via client-side JS to avoid SSR issues.
+---
+
+<style is:global>
+  /* Applied only on fine-pointer (non-touch) devices */
+  @media (pointer: fine) {
+    html,
+    html a,
+    html button {
+      cursor: none;
+    }
+
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+      will-change: transform;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background: #7c3aed;
+    }
+
+    .cursor-ring {
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid rgba(124, 58, 237, 0.6);
+      background: transparent;
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+    }
+  }
+
+  /* Hide entirely on touch/coarse devices */
+  @media (pointer: coarse) {
+    .cursor-dot,
+    .cursor-ring {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  // Bail out on touch/coarse devices
+  if (window.matchMedia('(pointer: fine)').matches) {
+    // Create elements
+    const dot = document.createElement('div');
+    dot.classList.add('cursor-dot');
+
+    const ring = document.createElement('div');
+    ring.classList.add('cursor-ring');
+
+    document.body.appendChild(ring);
+    document.body.appendChild(dot);
+
+    // quickTo setters — dot tracks instantly, ring lerps at 0.12
+    const dotX = gsap.quickTo(dot, 'x', { duration: 0 });
+    const dotY = gsap.quickTo(dot, 'y', { duration: 0 });
+    const ringX = gsap.quickTo(ring, 'x', { duration: 0.55, ease: 'power3.out' });
+    const ringY = gsap.quickTo(ring, 'y', { duration: 0.55, ease: 'power3.out' });
+
+    // We emulate lerp: 0.12 feel with a short duration + power ease.
+    // GSAP quickTo doesn't accept a `lerp` option directly; the duration +
+    // ease combination produces visually equivalent trailing behaviour.
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      dotX(mouseX);
+      dotY(mouseY);
+      ringX(mouseX);
+      ringY(mouseY);
+    });
+
+    // Hover targets: links, buttons, and anything with data-cursor-hover
+    const HOVER_SELECTOR = 'a, button, [data-cursor-hover]';
+
+    function onEnter() {
+      gsap.to(ring, {
+        scale: 1.8,
+        backgroundColor: 'rgba(124, 58, 237, 0.2)',
+        borderColor: 'rgba(124, 58, 237, 0.5)',
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+      gsap.to(dot, {
+        scale: 0,
+        duration: 0.2,
+        ease: 'power2.out',
+      });
+    }
+
+    function onLeave() {
+      gsap.to(ring, {
+        scale: 1,
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(124, 58, 237, 0.6)',
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+      gsap.to(dot, {
+        scale: 1,
+        duration: 0.2,
+        ease: 'power2.out',
+      });
+    }
+
+    // Use event delegation on document so dynamically added elements work
+    document.addEventListener('mouseover', (e) => {
+      if ((e.target as Element).closest(HOVER_SELECTOR)) {
+        onEnter();
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      if ((e.target as Element).closest(HOVER_SELECTOR)) {
+        onLeave();
+      }
+    });
+
+    // Mousedown: punch the dot
+    document.addEventListener('mousedown', () => {
+      gsap.to(dot, {
+        scale: 1.5,
+        duration: 0.1,
+        ease: 'power2.out',
+      });
+    });
+
+    document.addEventListener('mouseup', () => {
+      gsap.to(dot, {
+        scale: 1,
+        duration: 0.2,
+        ease: 'elastic.out(1, 0.5)',
+      });
+    });
+
+    // Hide cursor when it leaves the window
+    document.addEventListener('mouseleave', () => {
+      gsap.to([dot, ring], { opacity: 0, duration: 0.2 });
+    });
+
+    document.addEventListener('mouseenter', () => {
+      gsap.to([dot, ring], { opacity: 1, duration: 0.2 });
+    });
+  }
+</script>

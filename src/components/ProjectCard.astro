@@ -1,0 +1,663 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  icon: string;
+  oneliner: string;
+  description: string;
+  tech: string[];
+  github: string;
+  stats: { label: string; value: string }[];
+  decisions: string[];
+  images?: string[];
+  footer?: string;
+}
+
+const { id, title, icon, oneliner, description, tech, github, stats, decisions, images, footer } =
+  Astro.props;
+---
+
+<article
+  class="project-card"
+  data-card-id={id}
+  data-animate="fadeUp"
+>
+  <!-- ── Collapsed header (always visible) ── -->
+  <div class="card-header">
+    <div class="card-header-left">
+      <div class="card-title-row">
+        <span class="card-icon" aria-hidden="true">{icon}</span>
+        <h3 class="card-title">{title}</h3>
+      </div>
+      <p class="card-oneliner">{oneliner}</p>
+      <div class="badge-list card-badges">
+        {tech.map((t) => <span class="tech-badge">{t}</span>)}
+      </div>
+    </div>
+    <button
+      class="toggle-btn"
+      data-toggle={id}
+      aria-expanded="false"
+      aria-controls={`expand-${id}`}
+    >
+      <span class="toggle-text">Case Study</span>
+      <span class="toggle-arrow">↓</span>
+    </button>
+  </div>
+
+  <!-- ── Expanded content (hidden by default) ── -->
+  <div class="card-expand" id={`expand-${id}`} data-expand={id} aria-hidden="true">
+    <div class="card-expand-inner">
+      <!-- Divider -->
+      <div class="expand-divider"></div>
+
+      <!-- 1. Stats row -->
+      {
+        stats.length > 0 && (
+          <div class="expand-section">
+            <span class="expand-section-label">The numbers</span>
+            <div class="stats-row">
+              {stats.map((s) => (
+                <div class="stat-box">
+                  <span class="stat-value">{s.value}</span>
+                  <span class="stat-label">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      <!-- 2. What I built -->
+      <div class="expand-section">
+        <span class="expand-section-label">What I built</span>
+        <p class="expand-description">{description}</p>
+      </div>
+
+      <!-- 3. Key decisions -->
+      {
+        decisions.length > 0 && (
+          <div class="expand-section">
+            <span class="expand-section-label">Key decisions</span>
+            <ul class="decisions-list">
+              {decisions.map((d) => (
+                <li class="decision-item">
+                  <span class="decision-bullet" aria-hidden="true">→</span>
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <!-- 4. Image carousel (optional) -->
+      {
+        images && images.length > 0 && (
+          <div class="expand-section">
+            <span class="expand-section-label">Screenshots</span>
+            <div class="carousel" data-carousel={id}>
+              <div class="carousel-track" data-track={id}>
+                {images.map((src, i) => (
+                  <div class="carousel-slide" data-index={i} aria-hidden={i !== 0 ? 'true' : 'false'}>
+                    <img src={src} alt={`${title} screenshot ${i + 1}`} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+              <button
+                class="carousel-btn carousel-btn--prev"
+                data-carousel-prev={id}
+                aria-label="Previous screenshot"
+              >
+                ‹
+              </button>
+              <button
+                class="carousel-btn carousel-btn--next"
+                data-carousel-next={id}
+                aria-label="Next screenshot"
+              >
+                ›
+              </button>
+              <div class="carousel-dots" data-dots={id}>
+                {images.map((_, i) => (
+                  <button
+                    class={`carousel-dot${i === 0 ? ' is-active' : ''}`}
+                    data-dot-index={i}
+                    data-dot-carousel={id}
+                    aria-label={`Go to screenshot ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      <!-- 5. Footer row -->
+      <div class="expand-footer">
+        <a href={github} target="_blank" rel="noopener noreferrer" class="btn-primary github-btn">
+          → GitHub
+        </a>
+        {footer && <span class="footer-note">{footer}</span>}
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  /* ── Card shell ── */
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition:
+      border-color var(--transition),
+      box-shadow var(--transition),
+      transform var(--transition);
+    position: relative;
+  }
+
+  .project-card:hover:not(.is-expanded) {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .project-card.is-expanded {
+    border-color: rgba(124, 58, 237, 0.3);
+    box-shadow: 0 8px 40px rgba(124, 58, 237, 0.1);
+  }
+
+  /* ── Header ── */
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.75rem;
+  }
+
+  .card-header-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    line-height: 1.15;
+  }
+
+  .card-oneliner {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .card-badges {
+    flex-wrap: wrap;
+  }
+
+  /* ── Toggle button ── */
+  .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+      border-color var(--transition),
+      color var(--transition),
+      background var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .toggle-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-light);
+    background: var(--accent-glow);
+  }
+
+  .toggle-btn[aria-expanded='true'] {
+    border-color: var(--accent);
+    color: var(--accent-light);
+    background: var(--accent-glow);
+  }
+
+  .toggle-arrow {
+    display: inline-block;
+    transition: transform var(--transition);
+  }
+
+  .toggle-btn[aria-expanded='true'] .toggle-arrow {
+    transform: rotate(180deg);
+  }
+
+  /* ── Expand container (GSAP controls height/opacity) ── */
+  .card-expand {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .card-expand-inner {
+    padding: 0 1.75rem 1.75rem;
+  }
+
+  /* ── Divider inside expand ── */
+  .expand-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Expand sections ── */
+  .expand-section {
+    margin-bottom: 1.75rem;
+  }
+
+  .expand-section-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 0.875rem;
+  }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .stat-box {
+    flex: 1;
+    min-width: 100px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Description ── */
+  .expand-description {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  /* ── Decisions list ── */
+  .decisions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .decision-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .decision-bullet {
+    color: var(--accent-light);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    margin-top: 0.1em;
+  }
+
+  /* ── Carousel ── */
+  .carousel {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    background: rgba(8, 8, 8, 0.75);
+    border: 1px solid var(--border-hover);
+    border-radius: 50%;
+    color: var(--text);
+    font-size: 1.25rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      background var(--transition),
+      border-color var(--transition);
+    z-index: 2;
+    backdrop-filter: blur(4px);
+  }
+
+  .carousel-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .carousel-btn--prev {
+    left: 0.75rem;
+  }
+
+  .carousel-btn--next {
+    right: 0.75rem;
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.4rem;
+    z-index: 2;
+  }
+
+  .carousel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition:
+      background var(--transition),
+      transform var(--transition);
+    padding: 0;
+  }
+
+  .carousel-dot.is-active {
+    background: var(--accent-light);
+    transform: scale(1.35);
+  }
+
+  /* ── Expand footer ── */
+  .expand-footer {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .github-btn {
+    font-size: 0.875rem;
+    padding: 0.6rem 1.375rem;
+  }
+
+  .footer-note {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 600px) {
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem;
+    }
+
+    .card-expand-inner {
+      padding: 0 1.25rem 1.25rem;
+    }
+
+    .stats-row {
+      gap: 0.5rem;
+    }
+
+    .stat-box {
+      min-width: 80px;
+    }
+
+    .stat-value {
+      font-size: 1.375rem;
+    }
+
+    .toggle-btn {
+      align-self: flex-start;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Track currently open card id
+  let openCardId: string | null = null;
+
+  // Map of card id → GSAP timeline
+  const timelines = new Map<string, gsap.core.Timeline>();
+
+  function buildTimeline(expandEl: HTMLElement): gsap.core.Timeline {
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(
+      expandEl,
+      { height: 0, opacity: 0 },
+      {
+        height: 'auto',
+        opacity: 1,
+        duration: 0.5,
+        ease: 'power2.out',
+      }
+    );
+    return tl;
+  }
+
+  function openCard(cardId: string): void {
+    const expandEl = document.querySelector<HTMLElement>(`[data-expand="${cardId}"]`);
+    const toggleBtn = document.querySelector<HTMLButtonElement>(`[data-toggle="${cardId}"]`);
+    const cardEl = document.querySelector<HTMLElement>(`[data-card-id="${cardId}"]`);
+
+    if (!expandEl || !toggleBtn || !cardEl) return;
+
+    // Build timeline if not already cached
+    if (!timelines.has(cardId)) {
+      timelines.set(cardId, buildTimeline(expandEl));
+    }
+
+    const tl = timelines.get(cardId)!;
+    tl.play();
+
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    expandEl.setAttribute('aria-hidden', 'false');
+    cardEl.classList.add('is-expanded');
+
+    // Update button label
+    const textEl = toggleBtn.querySelector<HTMLElement>('.toggle-text');
+    if (textEl) textEl.textContent = 'Close';
+
+    openCardId = cardId;
+  }
+
+  function closeCard(cardId: string): void {
+    const expandEl = document.querySelector<HTMLElement>(`[data-expand="${cardId}"]`);
+    const toggleBtn = document.querySelector<HTMLButtonElement>(`[data-toggle="${cardId}"]`);
+    const cardEl = document.querySelector<HTMLElement>(`[data-card-id="${cardId}"]`);
+
+    if (!expandEl || !toggleBtn || !cardEl) return;
+
+    const tl = timelines.get(cardId);
+    if (tl) tl.reverse();
+
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    expandEl.setAttribute('aria-hidden', 'true');
+    cardEl.classList.remove('is-expanded');
+
+    // Reset button label
+    const textEl = toggleBtn.querySelector<HTMLElement>('.toggle-text');
+    if (textEl) textEl.textContent = 'Case Study';
+
+    if (openCardId === cardId) openCardId = null;
+  }
+
+  // Exported global for use by Projects.astro or other components
+  (window as any).closeAllCards = function (): void {
+    if (openCardId) closeCard(openCardId);
+  };
+
+  function initCard(toggleBtn: HTMLButtonElement): void {
+    const cardId = toggleBtn.getAttribute('data-toggle');
+    if (!cardId) return;
+
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+
+      if (isOpen) {
+        closeCard(cardId);
+      } else {
+        // Close whatever is currently open first
+        if (openCardId && openCardId !== cardId) {
+          closeCard(openCardId);
+        }
+        openCard(cardId);
+      }
+    });
+  }
+
+  function initCarousel(carouselEl: HTMLElement): void {
+    const carouselId = carouselEl.getAttribute('data-carousel');
+    if (!carouselId) return;
+
+    const track = carouselEl.querySelector<HTMLElement>(`[data-track="${carouselId}"]`);
+    const prevBtn = carouselEl.querySelector<HTMLButtonElement>(`[data-carousel-prev="${carouselId}"]`);
+    const nextBtn = carouselEl.querySelector<HTMLButtonElement>(`[data-carousel-next="${carouselId}"]`);
+    const dots = carouselEl.querySelectorAll<HTMLButtonElement>(`[data-dot-carousel="${carouselId}"]`);
+
+    if (!track) return;
+
+    const slides = track.querySelectorAll<HTMLElement>('.carousel-slide');
+    let current = 0;
+    const total = slides.length;
+
+    function goTo(index: number): void {
+      current = (index + total) % total;
+      track!.style.transform = `translateX(-${current * 100}%)`;
+
+      // Update slides aria-hidden
+      slides.forEach((slide, i) => {
+        slide.setAttribute('aria-hidden', i !== current ? 'true' : 'false');
+      });
+
+      // Update dots
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('is-active', i === current);
+      });
+    }
+
+    prevBtn?.addEventListener('click', () => goTo(current - 1));
+    nextBtn?.addEventListener('click', () => goTo(current + 1));
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => goTo(i));
+    });
+  }
+
+  function initAll(): void {
+    // Init toggle buttons
+    document.querySelectorAll<HTMLButtonElement>('[data-toggle]').forEach(initCard);
+
+    // Init carousels
+    document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(initCarousel);
+  }
+
+  // Run immediately — layout is already rendered by Astro SSR
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+
+  // Also respond to bootComplete for TerminalBoot integration
+  document.addEventListener('bootComplete', initAll);
+</script>
