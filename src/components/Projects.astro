@@ -35,8 +35,8 @@ const projects = [
     github: 'https://github.com/Tyler-Irving/kalshi-weather-arbitrage-dashboard',
     stats: [
       { label: 'Analytics Endpoints', value: '34' },
-      { label: 'Live Log Streaming', value: 'WebSockets' },
-      { label: 'Frontend Polling', value: 'Every 10s' },
+      { label: 'Live Streaming', value: 'WS' },
+      { label: 'Frontend Poll', value: '10s' },
     ],
     decisions: [
       'File-reader architecture — no database; Django reads daemon-produced JSON/JSONL on every request for always-fresh data',
@@ -67,8 +67,8 @@ const projects = [
     stats: [
       { label: 'Ensemble Models', value: '5' },
       { label: 'Cities Covered', value: '11' },
-      { label: 'Poll Interval', value: '15 min' },
-      { label: 'Max Open Positions', value: '20' },
+      { label: 'Poll Interval', value: '15m' },
+      { label: 'Max Positions', value: '20' },
     ],
     decisions: [
       'Bayesian log-odds blending at 30% model / 70% market weighting — inverse-transformed back to probability space per trade',
@@ -90,9 +90,9 @@ const projects = [
     github: 'https://github.com/Tyler-Irving/crypto-daemon',
     stats: [
       { label: 'Trading Pairs', value: '10' },
-      { label: 'Signals', value: '5 composite' },
+      { label: 'Composite Signals', value: '5' },
       { label: 'Polling Interval', value: '30s' },
-      { label: 'Max Position', value: '$50 USD' },
+      { label: 'Max Position', value: '$50' },
     ],
     decisions: [
       'Composite 0–100 scoring gate — buys only trigger at ≥50 points to filter weak signals',
@@ -112,8 +112,8 @@ const projects = [
     tech: ['Django 4.2', 'Django REST Framework', 'React 19', 'TypeScript', 'Vite 7', 'Tailwind CSS 4', 'pandas', 'drf-spectacular (OpenAPI 3.0)'],
     github: 'https://github.com/Tyler-Irving/file-to-api',
     stats: [
-      { label: 'Upload → Live API', value: '< 5s' },
-      { label: 'Rate Limit (reads)', value: '1,000/hr' },
+      { label: 'Upload → Live API', value: '<5s' },
+      { label: 'Rate Limit (reads)', value: '1k/hr' },
       { label: 'Max Upload', value: '10 MB' },
     ],
     decisions: [
