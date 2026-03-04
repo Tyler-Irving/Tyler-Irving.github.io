@@ -59,7 +59,7 @@
     border-radius: 8px;
     background: rgba(20, 20, 20, 0.6);
     box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
-    min-width: 420px;
+    width: min(420px, calc(100vw - 40px));
   }
 
   .boot-line {
@@ -70,6 +70,17 @@
     /* Lines start invisible; GSAP reveals them */
     opacity: 0;
     clip-path: inset(0 100% 0 0);
+  }
+
+  @media (max-width: 480px) {
+    .boot-terminal {
+      padding: 28px 20px;
+      border-radius: 6px;
+    }
+
+    .boot-line {
+      font-size: 0.78rem;
+    }
   }
 
   /* Prompt: violet accent */
