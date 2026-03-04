@@ -7,34 +7,40 @@
 
 <div class="boot-overlay" id="boot-overlay" aria-hidden="true">
   <div class="boot-terminal" role="status" aria-live="polite" aria-label="Portfolio loading">
-    <div class="boot-line" id="boot-line-0">
+    <div class="boot-line boot-line--cmd" id="boot-line-0">
       <span class="prompt">$</span>
       <span class="cmd"> tyler --init</span>
     </div>
-    <div class="boot-line" id="boot-line-1">
-      <span class="prefix">&gt;</span>
-      <span class="label"> clearance</span>
-      <span class="dots">............</span>
-      <span class="value">SECRET</span>
-      <span class="spaces">    </span>
-      <span class="ok">[OK]</span>
+    <div class="boot-line boot-line--status" id="boot-line-1">
+      <span class="status-left">
+        <span class="prefix">&gt;</span>
+        <span class="label"> clearance</span>
+      </span>
+      <span class="status-right">
+        <span class="value">SECRET</span>
+        <span class="ok">[OK]</span>
+      </span>
     </div>
-    <div class="boot-line" id="boot-line-2">
-      <span class="prefix">&gt;</span>
-      <span class="label"> algo-trading</span>
-      <span class="dots">..........</span>
-      <span class="value">LIVE</span>
-      <span class="spaces">     </span>
-      <span class="ok">[OK]</span>
+    <div class="boot-line boot-line--status" id="boot-line-2">
+      <span class="status-left">
+        <span class="prefix">&gt;</span>
+        <span class="label"> algo-trading</span>
+      </span>
+      <span class="status-right">
+        <span class="value">LIVE</span>
+        <span class="ok">[OK]</span>
+      </span>
     </div>
-    <div class="boot-line" id="boot-line-3">
-      <span class="prefix">&gt;</span>
-      <span class="label"> portfolio</span>
-      <span class="dots">..........</span>
-      <span class="value">LOADING</span>
-      <span class="spaces">     </span>
-      <span class="ok">[OK]</span>
-      <span class="cursor-blink" id="boot-cursor">&#9608;</span>
+    <div class="boot-line boot-line--status" id="boot-line-3">
+      <span class="status-left">
+        <span class="prefix">&gt;</span>
+        <span class="label"> portfolio</span>
+      </span>
+      <span class="status-right">
+        <span class="value">LOADING</span>
+        <span class="ok">[OK]</span>
+        <span class="cursor-blink" id="boot-cursor">&#9608;</span>
+      </span>
     </div>
   </div>
 </div>
@@ -66,10 +72,24 @@
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: 0.875rem;
     line-height: 1.6;
-    white-space: pre;
+    white-space: nowrap;
     /* Lines start invisible; GSAP reveals them */
     opacity: 0;
     clip-path: inset(0 100% 0 0);
+  }
+
+  .boot-line--status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .status-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
   }
 
   @media (max-width: 480px) {
@@ -104,20 +124,9 @@
     color: #f0f0f0;
   }
 
-  /* Dots: muted */
-  .dots {
-    color: #888888;
-  }
-
   /* Value keyword: slightly dimmed */
   .value {
     color: #cccccc;
-  }
-
-  /* Spacing helper */
-  .spaces {
-    color: transparent;
-    user-select: none;
   }
 
   /* [OK] badge: green */
