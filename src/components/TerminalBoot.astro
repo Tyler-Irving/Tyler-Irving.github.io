@@ -39,7 +39,6 @@
       <span class="status-right">
         <span class="value">LOADING</span>
         <span class="ok">[OK]</span>
-        <span class="cursor-blink" id="boot-cursor">&#9608;</span>
       </span>
     </div>
   </div>
@@ -59,8 +58,9 @@
   .boot-terminal {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 10px;
-    padding: 40px 48px;
+    padding: 40px 24px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 8px;
     background: rgba(20, 20, 20, 0.6);
@@ -83,6 +83,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    width: 100%;
   }
 
   .status-right {
@@ -135,17 +136,6 @@
     font-weight: 600;
   }
 
-  /* Blinking block cursor */
-  .cursor-blink {
-    color: #7c3aed;
-    animation: blink 0.8s step-end infinite;
-    display: inline-block;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-  }
 </style>
 
 <script>
@@ -166,18 +156,9 @@
       document.getElementById('boot-line-3'),
     ].filter(Boolean) as HTMLElement[];
 
-    const cursor = document.getElementById('boot-cursor') as HTMLElement | null;
-
-    // Hide cursor until last line is visible
-    if (cursor) gsap.set(cursor, { opacity: 0 });
-
     const tl = gsap.timeline({
       onComplete: () => {
-        // 300ms pause, then dissolve
-        gsap.delayedCall(0.3, () => {
-          // Stop cursor blink animation before fade
-          if (cursor) cursor.style.animation = 'none';
-
+        gsap.delayedCall(0.7, () => {
           gsap.to(overlay, {
             opacity: 0,
             duration: 0.5,
@@ -206,15 +187,6 @@
           clipPath: 'inset(0 0% 0 0)',
           duration: 0.22,
           ease: 'power2.out',
-          onComplete: isLast
-            ? () => {
-                // Show blinking cursor after last line reveals
-                if (cursor) {
-                  gsap.set(cursor, { opacity: 1 });
-                  cursor.style.animation = 'blink 0.8s step-end infinite';
-                }
-              }
-            : undefined,
         },
         startTime
       );
