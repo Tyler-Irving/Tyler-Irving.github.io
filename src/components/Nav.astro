@@ -17,8 +17,10 @@
   .floating-nav {
     position: fixed;
     top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: 0 auto;
     z-index: 1000;
 
     display: flex;
@@ -33,9 +35,6 @@
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
 
-    /* GSAP will override this transform for show/hide, so we keep a
-       translateX baseline. GSAP accounts for existing transforms via
-       the xPercent property instead. */
   }
 
   .nav-link {
@@ -97,13 +96,7 @@
   let lastScrollY = window.scrollY;
   let isHidden = false;
 
-  // GSAP manages yPercent so we don't fight the CSS translateX(-50%).
-  // We set xPercent once so GSAP uses that internally.
-  gsap.set(nav, { xPercent: -50, yPercent: 0 });
-
-  // Correct the CSS transform after GSAP takes over (avoid double translate)
-  nav.style.transform = '';
-  nav.style.left = '50%';
+  gsap.set(nav, { yPercent: 0 });
 
   function showNav() {
     if (!isHidden) return;
