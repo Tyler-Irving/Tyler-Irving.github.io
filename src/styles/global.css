@@ -54,7 +54,6 @@
   --z-overlay: 300;
   --z-modal: 400;
   --z-toast: 500;
-  --z-cursor: 9999;
 }
 
 /* ------------------------------------------------------------
@@ -656,22 +655,6 @@ button {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: shimmer 4s linear infinite;
-}
-
-/* ------------------------------------------------------------
-   15. CURSOR GLOW EFFECT
-   ------------------------------------------------------------ */
-.glow-cursor {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-base);
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(124, 58, 237, 0.04),
-    transparent 40%
-  );
-  transition: background 0.1s ease;
 }
 
 /* ------------------------------------------------------------
