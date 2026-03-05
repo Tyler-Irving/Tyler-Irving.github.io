@@ -7,13 +7,14 @@ interface Props {
   description: string;
   tech: string[];
   github: string;
+  liveUrl?: string;
   stats: { label: string; value: string }[];
   decisions: string[];
   images?: string[];
   footer?: string;
 }
 
-const { id, title, icon, oneliner, description, tech, github, stats, decisions, images, footer } =
+const { id, title, icon, oneliner, description, tech, github, liveUrl, stats, decisions, images, footer } =
   Astro.props;
 ---
 
@@ -29,7 +30,14 @@ const { id, title, icon, oneliner, description, tech, github, stats, decisions, 
         <span class="card-icon" aria-hidden="true">{icon}</span>
         <h3 class="card-title">{title}</h3>
       </div>
-      <p class="card-oneliner">{oneliner}</p>
+      <p class="card-oneliner">
+        {oneliner}
+        {liveUrl && (
+          <a href={liveUrl} target="_blank" rel="noopener noreferrer" class="card-live-link">
+            See it live →
+          </a>
+        )}
+      </p>
       <div class="badge-list card-badges">
         {tech.map((t) => <span class="tech-badge">{t}</span>)}
       </div>
@@ -216,6 +224,20 @@ const { id, title, icon, oneliner, description, tech, github, stats, decisions, 
     flex-wrap: wrap;
   }
 
+  /* ── Inline live link ── */
+  .card-live-link {
+    margin-left: 0.4em;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color var(--transition);
+  }
+
+  .card-live-link:hover {
+    color: var(--text);
+  }
+
   /* ── Toggle button ── */
   .toggle-btn {
     display: inline-flex;
@@ -236,8 +258,6 @@ const { id, title, icon, oneliner, description, tech, github, stats, decisions, 
       color var(--transition),
       background var(--transition);
     white-space: nowrap;
-    flex-shrink: 0;
-    margin-top: 0.15rem;
   }
 
   .toggle-btn:hover {
