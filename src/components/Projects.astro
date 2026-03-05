@@ -1,6 +1,8 @@
 ---
 import ProjectCard from './ProjectCard.astro';
 
+const featuredIds = new Set(['where-is-my-data', 'autoprospect']);
+
 const projects = [
   {
     id: 'where-is-my-data',
@@ -11,6 +13,7 @@ const projects = [
       'Interactive globe visualizing 181 cloud and colocation datacenters across AWS, Azure, GCP, Equinix, Digital Realty, Cloudflare, and 40+ other providers. Filter by provider type, estimate round-trip latency with a Haversine + fiber routing model, compare cloud pricing across 33 regions, and export filtered results as CSV or JSON.',
     tech: ['Next.js 16', 'React 19', 'TypeScript', 'Mapbox GL JS', 'Zustand', 'Tailwind CSS 4', 'Vercel'],
     github: 'https://github.com/Tyler-Irving/where-is-my-data',
+    liveUrl: 'https://whereismydata.io',
     stats: [
       { label: 'Datacenters', value: '181' },
       { label: 'Providers', value: '43' },
@@ -23,6 +26,30 @@ const projects = [
       'Shareable URLs via custom useUrlSync hook with 500ms debounce — encodes filters, viewport, and selected datacenter into query params',
     ],
     footer: 'Deployed on Vercel | 2026',
+  },
+  {
+    id: 'autoprospect',
+    title: 'AutoProspect',
+    icon: '🗺️',
+    oneliner: 'Draw a radius. Pick a category. Get AI-scored leads with pitch angles, ready to close.',
+    description:
+      'Full-stack lead intelligence tool built for selling automation services to local businesses. Draw a radius on a map, select a business category, and the pipeline runs automatically: Google Places discovery, parallel website enrichment (CMS detection, booking forms, CRM fingerprinting via page source), then Claude scores each business 0–100 across four automation dimensions — CRM, scheduling, marketing, and invoicing. The lead dashboard shows color-coded map dots, full score breakdowns with AI reasoning, recommended pitch angles, and deal value estimates. A manual Tier 2 mode triggers a deeper per-lead dossier for high-potential targets.',
+    tech: ['React 18', 'Vite', 'Tailwind CSS v4', 'Mapbox GL JS', 'Zustand', 'Django 5', 'Django REST Framework', 'Celery 5', 'Redis', 'PostgreSQL', 'httpx', 'BeautifulSoup4', 'Claude API', 'Google Places API', 'Docker'],
+    github: 'https://github.com/Tyler-Irving/autoprospect',
+    stats: [
+      { label: 'Pipeline Stages', value: '4' },
+      { label: 'Tests', value: '64' },
+      { label: 'Cost / Business', value: '~$0.02' },
+      { label: 'Celery Queues', value: '3' },
+    ],
+    decisions: [
+      '3 named Celery queues (default, enrichment, scoring) — enrichment and scoring run fully in parallel across the worker fleet',
+      'Claude receives structured context from enrichment and returns JSON-only: 0–100 scores, key signals, pitch angle, deal value estimate',
+      'Two scoring tiers — Tier 1 runs automatically on every business; Tier 2 is a deeper dossier triggered manually on high-potential leads',
+      'Enrichment detects CMS, booking systems, CRM/payment processors from raw page source via httpx + BeautifulSoup — no headless browser',
+      'Cost tracking (prompt tokens, completion tokens, cents) saved to DB on every Claude call; monthly budget visible on dashboard',
+    ],
+    footer: 'Personal tool | March 2026',
   },
   {
     id: 'kalshi-dashboard',
@@ -144,8 +171,8 @@ const projects = [
 
     <div class="projects-grid">
       {
-        projects.map((project, i) => (
-          <div class={`grid-item${i === 0 ? ' grid-item--full' : ''}`}>
+        projects.map((project) => (
+          <div class={`grid-item${featuredIds.has(project.id) ? ' grid-item--full' : ''}`}>
             <ProjectCard {...project} />
           </div>
         ))
