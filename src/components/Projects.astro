@@ -171,9 +171,9 @@ const projects = [
 
     <div class="projects-grid">
       {
-        projects.map((project) => (
+        projects.map((project, i) => (
           <div class={`grid-item${featuredIds.has(project.id) ? ' grid-item--full' : ''}`}>
-            <ProjectCard {...project} />
+            <ProjectCard {...project} index={i + 1} />
           </div>
         ))
       }

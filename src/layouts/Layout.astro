@@ -10,7 +10,7 @@ interface Props {
 
 const {
   title = 'Tyler Irving | Senior RPA Developer & Automation Consultant',
-  description = 'Senior RPA Developer with Secret Security Clearance at Baker Tilly. 6+ years building automation systems, live trading daemons, and enterprise solutions for the U.S. Navy.',
+  description = 'Tyler Irving — Senior RPA Developer & Automation Consultant with Secret Security Clearance. UiPath automation for the U.S. Navy at Baker Tilly, algorithmic trading systems, and full-stack apps in Python, Django, React, and TypeScript.',
   image = '/images/og-image.png',
   canonical,
 } = Astro.props;
@@ -33,7 +33,7 @@ const ogImage = new URL(image, siteUrl).href;
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Tyler Irving, RPA Developer, Automation Consultant, UiPath, Blue Prism, Power Automate, Secret Clearance, Baker Tilly, U.S. Navy, portfolio, software engineer"
+      content="Tyler Irving, RPA Developer, Automation Consultant, UiPath, Python developer, Django developer, React developer, TypeScript, full-stack developer, algorithmic trading, Kalshi, Secret Security Clearance, Baker Tilly, U.S. Navy, portfolio, software engineer, automation systems, live trading daemon"
     />
     <meta name="author" content="Tyler Irving" />
     <link rel="canonical" href={canonicalUrl} />
@@ -59,12 +59,18 @@ const ogImage = new URL(image, siteUrl).href;
     <meta name="twitter:creator" content="@TylerIrving" />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#080808" />
+    <meta name="theme-color" content="#0ea5e9" />
     <meta name="color-scheme" content="dark" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <!-- Preload hero image for LCP -->
+    <link rel="preload" as="image" href="/assets/tyler-irving.jpg" />
 
     <!-- Fonts — Clash Display (Fontshare) -->
     <link rel="preconnect" href="https://api.fontshare.com" />
@@ -81,17 +87,29 @@ const ogImage = new URL(image, siteUrl).href;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
     />
 
-    <!-- Structured Data -->
+    <!-- Structured Data: Person -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Tyler Irving",
         "url": "https://tyler-irving.github.io",
+        "image": "https://tyler-irving.github.io/assets/tyler-irving.jpg",
         "jobTitle": "Senior RPA Developer & Automation Consultant",
+        "description": "Senior RPA Developer with US Secret Security Clearance building UiPath automation for the U.S. Navy at Baker Tilly, plus algorithmic trading daemons and full-stack web applications.",
         "worksFor": {
           "@type": "Organization",
-          "name": "Baker Tilly"
+          "name": "Baker Tilly",
+          "url": "https://www.bakertilly.com"
+        },
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "Senior RPA Developer",
+          "occupationLocation": {
+            "@type": "Country",
+            "name": "United States"
+          },
+          "skills": "UiPath, Python, Django, React, TypeScript, Robotic Process Automation, Automation Engineering"
         },
         "sameAs": [
           "https://github.com/Tyler-Irving",
@@ -99,14 +117,104 @@ const ogImage = new URL(image, siteUrl).href;
         ],
         "knowsAbout": [
           "Robotic Process Automation",
-          "UiPath",
-          "Blue Prism",
-          "Power Automate",
+          "UiPath Studio",
+          "UiPath Orchestrator",
+          "UiPath AI Center",
+          "Document Understanding",
           "Python",
+          "Django",
+          "Django REST Framework",
+          "React",
+          "TypeScript",
+          "Full-Stack Development",
           "Software Engineering",
           "Algorithmic Trading",
-          "Kalshi",
-          "Automation"
+          "Kalshi Prediction Markets",
+          "Bayesian Probability",
+          "Automation Systems",
+          "Machine Learning",
+          "Enterprise Automation",
+          "U.S. Navy",
+          "Secret Security Clearance"
+        ]
+      }
+    </script>
+
+    <!-- Structured Data: Portfolio Projects -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Tyler Irving — Portfolio Projects",
+        "description": "Software projects built by Tyler Irving: trading systems, web apps, automation tools, and developer platforms.",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "WebApplication",
+              "name": "Where is my data?",
+              "url": "https://whereismydata.io",
+              "description": "Interactive globe visualizing 181 cloud and colocation datacenters across 43 providers. Latency estimation, pricing comparison, and CSV/JSON export.",
+              "applicationCategory": "DeveloperApplication",
+              "author": { "@type": "Person", "name": "Tyler Irving" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "WebApplication",
+              "name": "AutoProspect",
+              "description": "AI-powered lead intelligence tool for selling automation services. Draws radius on map, discovers local businesses, enriches them, and scores automation potential with Claude.",
+              "applicationCategory": "BusinessApplication",
+              "author": { "@type": "Person", "name": "Tyler Irving" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "WebApplication",
+              "name": "Weather Arbitrage Dashboard",
+              "description": "Full-stack monitoring dashboard for a Kalshi weather arbitrage trading daemon. Live log streaming over WebSockets, P&L charts, and 34 analytics endpoints.",
+              "applicationCategory": "FinanceApplication",
+              "author": { "@type": "Person", "name": "Tyler Irving" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Weather Arbitrage Daemon",
+              "description": "Autonomous Python daemon trading mispriced temperature contracts on Kalshi using 5 ensemble models, Bayesian blending, and Quarter-Kelly position sizing.",
+              "applicationCategory": "FinanceApplication",
+              "author": { "@type": "Person", "name": "Tyler Irving" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Crypto Trading Bot",
+              "description": "Automated cryptocurrency trading daemon for Coinbase Advanced Trade API with RSI-14, MACD, EMA-12/26, volume spike, and support-bounce composite scoring.",
+              "applicationCategory": "FinanceApplication",
+              "author": { "@type": "Person", "name": "Tyler Irving" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "item": {
+              "@type": "WebApplication",
+              "name": "File-to-API Platform",
+              "description": "Upload a CSV or Excel file and instantly get a fully functional REST API with auth, rate limiting, pagination, and Swagger docs. Dynamic model generation at runtime.",
+              "applicationCategory": "DeveloperApplication",
+              "author": { "@type": "Person", "name": "Tyler Irving" }
+            }
+          }
         ]
       }
     </script>
@@ -115,4 +223,79 @@ const ogImage = new URL(image, siteUrl).href;
   <body>
     <slot />
   </body>
+
+  <!--
+    Shimmer button injection — port of ShimmerButton (React/framer-motion component).
+    Injects the 4-element shimmer structure into every CTA after the DOM is ready.
+    CSS variables per button type are defined in global.css and ProjectCard.astro.
+  -->
+  <script>
+    function shimmerize(el: HTMLElement): void {
+      // Idempotent — skip if already shimmerized
+      if (el.querySelector('.shimmer-spark')) return;
+
+      // Wrap existing children in display:contents span so text stays above shimmer layers
+      const content = document.createElement('span');
+      content.className = 'shimmer-content';
+      while (el.firstChild) content.appendChild(el.firstChild);
+
+      // 1. Spark container (overflow: visible, container-type: size, blur filter)
+      const spark = document.createElement('span');
+      spark.className = 'shimmer-spark';
+      spark.setAttribute('aria-hidden', 'true');
+
+      // 2. Slide element — moves L→R across the button via shimmer-slide keyframe
+      const slide = document.createElement('span');
+      slide.className = 'shimmer-slide';
+
+      // 3. Rotate element — conic-gradient that spins inside the slide
+      const rotate = document.createElement('span');
+      rotate.className = 'shimmer-rotate';
+
+      slide.appendChild(rotate);
+      spark.appendChild(slide);
+
+      // 4. Highlight — inset box-shadow overlay (brightens on hover)
+      const highlight = document.createElement('span');
+      highlight.className = 'shimmer-highlight';
+      highlight.setAttribute('aria-hidden', 'true');
+
+      // 5. Backdrop — opaque fill at inset:1px, exposes shimmer glow on the 1px border ring
+      const backdrop = document.createElement('span');
+      backdrop.className = 'shimmer-backdrop';
+      backdrop.setAttribute('aria-hidden', 'true');
+
+      el.appendChild(spark);
+      el.appendChild(content);
+      el.appendChild(highlight);
+      el.appendChild(backdrop);
+    }
+
+    function initShimmer(): void {
+      document
+        .querySelectorAll<HTMLElement>('.btn-primary, .btn-ghost, .toggle-btn, .github-btn')
+        .forEach(shimmerize);
+
+      // Re-shimmerize any toggle buttons added dynamically (project card expand init
+      // runs on the same DOMContentLoaded tick — MutationObserver handles any late ones)
+      const observer = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          for (const node of m.addedNodes) {
+            if (node instanceof HTMLElement) {
+              node
+                .querySelectorAll<HTMLElement>('.btn-primary, .btn-ghost, .toggle-btn, .github-btn')
+                .forEach(shimmerize);
+            }
+          }
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initShimmer);
+    } else {
+      initShimmer();
+    }
+  </script>
 </html>

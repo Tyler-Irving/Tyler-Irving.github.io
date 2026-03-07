@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="404 — Page Not Found | Tyler Irving"
+  description="The page you're looking for doesn't exist. Head back to Tyler Irving's portfolio."
+>
+  <main class="not-found">
+    <div class="container">
+      <div class="nf-content">
+        <span class="nf-code">404</span>
+        <h1 class="nf-heading">Page not found.</h1>
+        <p class="nf-body">That URL doesn't exist. You might have followed a broken link.</p>
+        <a href="/" class="btn-primary">Back to portfolio &rarr;</a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .not-found {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+  }
+
+  .nf-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .nf-code {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-light);
+    opacity: 0.6;
+  }
+
+  .nf-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1.05;
+  }
+
+  .nf-body {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 38ch;
+  }
+</style>

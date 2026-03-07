@@ -13,16 +13,13 @@
   --text: #f0f0f0;
   --text-muted: #888888;
   --text-faint: #444444;
-  --accent: #7c3aed;
-  --accent-light: #9f67ff;
-  --accent-glow: rgba(124, 58, 237, 0.2);
+  --accent: #0ea5e9;
+  --accent-light: #38bdf8;
+  --accent-glow: rgba(14, 165, 233, 0.2);
   --border: rgba(255, 255, 255, 0.07);
   --border-hover: rgba(255, 255, 255, 0.15);
 
   /* Border radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
   --radius-pill: 999px;
 
   /* Typography */
@@ -38,22 +35,6 @@
   /* Layout */
   --max-w: 1100px;
   --section-gap: 140px;
-  --section-gap-sm: 80px;
-
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.6);
-  --shadow-accent: 0 4px 32px rgba(124, 58, 237, 0.25);
-
-  /* Z-index scale */
-  --z-base: 0;
-  --z-raised: 10;
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-overlay: 300;
-  --z-modal: 400;
-  --z-toast: 500;
 }
 
 /* ------------------------------------------------------------
@@ -86,6 +67,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  /* Subtle noise grain texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
 }
 
 img,
@@ -188,45 +172,6 @@ button {
 /* ------------------------------------------------------------
    5. BASE TYPOGRAPHY
    ------------------------------------------------------------ */
-.display-xl {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-}
-
-.display-lg {
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-}
-
-.display-md {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 3rem);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-.text-lg {
-  font-size: clamp(1.125rem, 2vw, 1.375rem);
-  line-height: 1.65;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.6;
-}
-
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1.5;
-}
-
 .mono {
   font-family: var(--font-mono);
   font-size: 0.875em;
@@ -263,41 +208,6 @@ button {
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
 }
 
-.container--narrow {
-  width: 100%;
-  max-width: 760px;
-  margin-inline: auto;
-  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
-}
-
-.section-gap {
-  padding-block: var(--section-gap);
-}
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 /* ------------------------------------------------------------
    7. SECTION LABEL
    ------------------------------------------------------------ */
@@ -312,6 +222,7 @@ button {
   text-transform: uppercase;
   color: var(--accent-light);
   margin-bottom: 1.25rem;
+  opacity: 0.85;
 }
 
 .section-label::before {
@@ -319,28 +230,120 @@ button {
   display: inline-block;
   width: 20px;
   height: 1px;
-  background: var(--accent-light);
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
   flex-shrink: 0;
 }
+
 
 /* ------------------------------------------------------------
    8. BUTTONS
    ------------------------------------------------------------ */
+
+/* ── Shimmer keyframes (port of ShimmerButton component) ── */
+@keyframes shimmer-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(100cqw - 100%)); }
+}
+@keyframes shimmer-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Shimmer structure — injected by JS into each CTA ──── */
+
+/* The spark container: sized to button, overflow visible for the blur */
+.shimmer-spark {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  container-type: size;
+  filter: blur(2px);
+  z-index: -30;
+  pointer-events: none;
+}
+
+/* Slides L→R across the button width (cqw = button's container width) */
+.shimmer-slide {
+  position: absolute;
+  inset: 0;
+  height: 100cqh;
+  aspect-ratio: 1;
+  animation: shimmer-slide var(--shimmer-speed, 3s) ease-in-out infinite alternate;
+}
+
+/* The rotating conic-gradient "spark" — same spread as ShimmerButton */
+.shimmer-rotate {
+  position: absolute;
+  inset: -100%;
+  width: auto;
+  rotate: 0deg;
+  background: conic-gradient(
+    from calc(270deg - 45deg),
+    transparent 0deg,
+    var(--shimmer-color, rgba(255, 255, 255, 0.6)) 90deg,
+    transparent 90deg
+  );
+  animation: shimmer-spin calc(var(--shimmer-speed, 3s) * 2) linear infinite;
+}
+
+/* Inset shadow highlight — mirrors ShimmerButton's highlight div */
+.shimmer-highlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 -8px 10px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease;
+  z-index: -10;
+  pointer-events: none;
+}
+
+/* Content wrapper — display:contents keeps layout identical, text stays above shimmer */
+.shimmer-content {
+  display: contents;
+}
+
+/* The backdrop: fills the button interior, leaving the 1px border gap for shimmer glow */
+.shimmer-backdrop {
+  position: absolute;
+  inset: 1px;
+  background: var(--shimmer-bg, rgba(8, 8, 8, 0.98));
+  border-radius: inherit;
+  z-index: -20;
+  pointer-events: none;
+}
+
+/* Hover — brighten highlight (toggle-btn and github-btn handled via scoped :hover) */
+:is(.btn-primary, .btn-ghost):hover .shimmer-highlight {
+  box-shadow: inset 0 -6px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Reduced motion — freeze shimmer animations */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-slide,
+  .shimmer-rotate {
+    animation: none !important;
+  }
+}
+
 .btn-primary {
+  --shimmer-speed: 3s;
+  --shimmer-color: rgba(255, 255, 255, 0.65);
+  --shimmer-bg: var(--accent);
+
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.75rem;
-  background: var(--accent);
+  background: var(--accent);   /* fallback before JS injection */
   color: #ffffff;
   font-family: var(--font-body);
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.5);
   cursor: pointer;
-  transition: background var(--transition), box-shadow var(--transition), transform var(--transition-fast);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition-fast);
   text-decoration: none;
   white-space: nowrap;
   position: relative;
@@ -348,37 +351,26 @@ button {
   isolation: isolate;
 }
 
-.btn-primary::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
-  opacity: 0;
-  transition: opacity var(--transition);
-  border-radius: inherit;
-}
-
 .btn-primary:hover {
-  background: var(--accent-light);
   border-color: var(--accent-light);
-  box-shadow: var(--shadow-accent);
+  box-shadow: 0 4px 28px rgba(14, 165, 233, 0.4);
   transform: translateY(-1px);
 }
 
-.btn-primary:hover::after {
-  opacity: 1;
-}
-
 .btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(1px);
 }
 
 .btn-ghost {
+  --shimmer-speed: 4s;
+  --shimmer-color: rgba(56, 189, 248, 0.5);
+  --shimmer-bg: rgba(8, 8, 8, 0.98);
+
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.75rem;
-  background: transparent;
+  background: transparent;   /* fallback before JS injection */
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.9375rem;
@@ -387,43 +379,22 @@ button {
   border-radius: var(--radius-pill);
   border: 1px solid var(--border-hover);
   cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition-fast);
+  transition: border-color var(--transition), color var(--transition), transform var(--transition-fast);
   text-decoration: none;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .btn-ghost:hover {
-  background: var(--bg-elevated);
-  border-color: var(--accent);
+  border-color: rgba(14, 165, 233, 0.5);
   color: var(--accent-light);
   transform: translateY(-1px);
 }
 
 .btn-ghost:active {
-  transform: translateY(0);
-}
-
-/* Icon buttons */
-.btn-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), color var(--transition);
-  text-decoration: none;
-  flex-shrink: 0;
-}
-
-.btn-icon:hover {
-  background: var(--bg-elevated);
-  border-color: var(--border-hover);
-  color: var(--text);
+  transform: translateY(1px);
 }
 
 /* ------------------------------------------------------------
@@ -434,33 +405,21 @@ button {
   align-items: center;
   gap: 0.35rem;
   padding: 0.3rem 0.75rem;
-  background: rgba(124, 58, 237, 0.08);
+  background: rgba(14, 165, 233, 0.08);
   color: var(--accent-light);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   line-height: 1;
   white-space: nowrap;
   transition: background var(--transition), border-color var(--transition);
 }
 
 .tech-badge:hover {
-  background: rgba(124, 58, 237, 0.15);
-  border-color: rgba(124, 58, 237, 0.4);
-}
-
-.tech-badge--neutral {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-muted);
-  border-color: var(--border);
-}
-
-.tech-badge--neutral:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--border-hover);
-  color: var(--text);
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.4);
 }
 
 .badge-list {
@@ -470,105 +429,8 @@ button {
 }
 
 /* ------------------------------------------------------------
-   10. CARD BASE
-   ------------------------------------------------------------ */
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.75rem;
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-.card:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.card--accent:hover {
-  border-color: rgba(124, 58, 237, 0.3);
-  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.12);
-}
-
-/* ------------------------------------------------------------
-   11. DIVIDERS
-   ------------------------------------------------------------ */
-.divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-  border: none;
-  margin-block: 2rem;
-}
-
-/* ------------------------------------------------------------
    12. KEYFRAMES
    ------------------------------------------------------------ */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
@@ -589,72 +451,15 @@ button {
   }
 }
 
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 /* ------------------------------------------------------------
    13. ANIMATION UTILITIES
    ------------------------------------------------------------ */
-.animate-fade-up {
-  animation: fadeUp 0.6s var(--transition) both;
-}
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease both;
-}
-
-.animate-blink {
-  animation: blink 1.2s step-end infinite;
-}
-
-/* Stagger delays */
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
-.delay-6 { animation-delay: 0.6s; }
-
-/* Intersection observer driven animations */
+/* GSAP initial hidden state for scroll-reveal elements */
 [data-animate] {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-[data-animate].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-[data-animate="fade"] {
-  transform: none;
-}
-
-[data-animate="scale"] {
-  transform: scale(0.95);
-}
-
-[data-animate="scale"].is-visible {
-  transform: scale(1);
-}
-
-/* ------------------------------------------------------------
-   14. GRADIENT TEXT
-   ------------------------------------------------------------ */
-.gradient-text {
-  background: linear-gradient(135deg, var(--accent-light), #c084fc, var(--accent-light));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
 }
 
 /* ------------------------------------------------------------
@@ -676,11 +481,6 @@ button {
     --section-gap: 80px;
   }
 
-  .grid-2,
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-
   .btn-primary,
   .btn-ghost {
     padding: 0.6875rem 1.5rem;
@@ -692,11 +492,6 @@ button {
 @media (max-width: 480px) {
   :root {
     --section-gap: 60px;
-  }
-
-  .card {
-    padding: 1.25rem;
-    border-radius: var(--radius-md);
   }
 }
 

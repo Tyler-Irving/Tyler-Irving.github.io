@@ -1,0 +1,200 @@
+---
+// EtherealBackground.astro
+//
+// Native Astro port of the "Ethereal Shadow" React component.
+// Replicates the exact SVG filter chain (feTurbulence → feColorMatrix hueRotate
+// → feColorMatrix matrix → feDisplacementMap × 2) and animates the hueRotate
+// value using GSAP (already a project dependency) instead of framer-motion.
+//
+// Props (mirroring the original):
+//   color    — CSS color string for the blob            (default: purple accent)
+//   scale    — displacement intensity  1–100            (default: 55)
+//   speed    — animation speed         1–100            (default: 80)
+//   noise    — grain opacity           0–1              (default: 0.022)
+
+interface Props {
+  color?: string;
+  scale?: number;
+  speed?: number;
+  noise?: number;
+}
+
+const {
+  color  = 'rgba(14, 165, 233, 0.16)',
+  scale  = 55,
+  speed  = 80,
+  noise  = 0.022,
+} = Astro.props;
+
+// Mirror the original mapRange helper
+function mapRange(v: number, fl: number, fh: number, tl: number, th: number): number {
+  if (fl === fh) return tl;
+  return tl + ((v - fl) / (fh - fl)) * (th - tl);
+}
+
+const displacementScale = mapRange(scale, 1, 100, 20, 100);         // ~63 at scale=55
+const animationDuration = mapRange(speed, 1, 100, 1000, 50) / 25;  // ~12s at speed=80
+const freqX = mapRange(scale, 0, 100, 0.001, 0.0005).toFixed(5);   // turbulence x
+const freqY = mapRange(scale, 0, 100, 0.004, 0.002).toFixed(5);    // turbulence y
+const inset  = Math.ceil(displacementScale);                        // overflow buffer
+---
+
+<!-- The blob lives outside the content stacking context, behind everything -->
+<div id="ethereal-bg" aria-hidden="true">
+
+  <!-- SVG filter — 0×0 invisible, referenced by id -->
+  <svg id="ethereal-filter-svg" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter
+        id="ethereal-filter"
+        x="-60%" y="-60%"
+        width="220%" height="220%"
+        color-interpolation-filters="sRGB"
+      >
+        <!-- Step 1: Generate noise field -->
+        <feTurbulence
+          id="ethereal-turbulence"
+          result="undulation"
+          numOctaves="2"
+          baseFrequency={`${freqX},${freqY}`}
+          seed="0"
+          type="turbulence"
+        />
+        <!-- Step 2: Rotate hue — GSAP animates the `values` attr -->
+        <feColorMatrix
+          id="ethereal-hue"
+          in="undulation"
+          type="hueRotate"
+          values="0"
+        />
+        <!-- Step 3: Amplify channels to create circulation map -->
+        <feColorMatrix
+          in="dist"
+          result="circulation"
+          type="matrix"
+          values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0"
+        />
+        <!-- Step 4+5: Double displacement for fluid distortion -->
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="circulation"
+          scale={displacementScale}
+          result="dist"
+        />
+        <feDisplacementMap
+          in="dist"
+          in2="undulation"
+          scale={displacementScale}
+          result="output"
+        />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Inner wrapper — gets the displacement filter applied -->
+  <div
+    id="ethereal-inner"
+    style={`inset: -${inset}px;`} data-duration={animationDuration.toFixed(2)}
+  >
+    <!-- The actual blob: a colored div masked to a shadow silhouette -->
+    <div
+      id="ethereal-blob"
+      style={`background-color: ${color};`}
+    ></div>
+  </div>
+
+  <!-- Noise grain overlay for texture depth -->
+  {noise > 0 && (
+    <div
+      id="ethereal-noise"
+      style={`opacity: ${noise};`}
+    ></div>
+  )}
+
+</div>
+
+<style>
+  /* ── Root container ── */
+  #ethereal-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* The 0×0 SVG filter — invisible but keeps the filter in the DOM */
+  #ethereal-filter-svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  /* ── Animated inner layer (displacement applied here) ── */
+  #ethereal-inner {
+    position: absolute;
+    /* inset overridden by inline style (displacement overflow buffer) */
+    filter: url(#ethereal-filter) blur(4px);
+    will-change: filter;
+  }
+
+  /* ── Blob — colored + masked to shadow silhouette ── */
+  #ethereal-blob {
+    width: 100%;
+    height: 100%;
+    /* Shadow PNG mask from the original component source */
+    mask-image: url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png');
+    -webkit-mask-image: url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png');
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-position: center;
+  }
+
+  /* ── Grain noise ── */
+  #ethereal-noise {
+    position: absolute;
+    inset: 0;
+    /* Noise PNG from the original component source */
+    background-image: url('https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png');
+    background-size: 300px;
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* ── Reduced motion: kill the filter, keep static tint ── */
+  @media (prefers-reduced-motion: reduce) {
+    #ethereal-inner {
+      filter: blur(40px);
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const hueEl   = document.getElementById('ethereal-hue') as SVGFEColorMatrixElement | null;
+  const innerEl = document.getElementById('ethereal-inner') as HTMLElement | null;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (hueEl && innerEl && !reducedMotion) {
+    // Animate hueRotate 0 → 360 on a loop — mirrors framer-motion's animate() call
+    const state = { val: 0 };
+
+    gsap.to(state, {
+      val: 360,
+      // Duration injected from Astro props at build time via the data attr below
+      duration: Number(innerEl.dataset.duration ?? 12),
+      repeat: -1,
+      ease: 'none',
+      onUpdate() {
+        hueEl.setAttribute('values', String(state.val | 0));
+      },
+    });
+  }
+</script>

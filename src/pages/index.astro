@@ -6,12 +6,22 @@ import Hero from '../components/Hero.astro';
 import Projects from '../components/Projects.astro';
 import WorkExperience from '../components/WorkExperience.astro';
 import Skills from '../components/Skills.astro';
+import EtherealBackground from '../components/EtherealBackground.astro';
 ---
 
 <Layout>
-<TerminalBoot />
+  <TerminalBoot />
+
+  <!-- Ethereal animated background — sits at z-index 0 behind all content -->
+  <EtherealBackground
+    color="rgba(14, 165, 233, 0.16)"
+    scale={55}
+    speed={80}
+    noise={0.022}
+  />
+
   <Nav />
-  <main>
+  <main style="position: relative; z-index: 1;">
     <Hero />
     <Projects />
     <WorkExperience />
@@ -41,6 +51,8 @@ import Skills from '../components/Skills.astro';
     padding-block: 2.5rem;
     border-top: 1px solid var(--border);
     margin-top: 6rem;
+    position: relative;
+    z-index: 1;
   }
 
   .site-footer .container {
