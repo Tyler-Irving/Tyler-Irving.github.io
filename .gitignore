@@ -1,5 +1,6 @@
 # Swarm
 .swarm/
+.claude-flow/
 
 # Astro
 dist/
@@ -17,3 +18,6 @@ npm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Stitch Outputs
+stitch-outputs/
