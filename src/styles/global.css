@@ -16,8 +16,8 @@
   --accent: #0ea5e9;
   --accent-light: #38bdf8;
   --accent-glow: rgba(14, 165, 233, 0.2);
-  --border: rgba(255, 255, 255, 0.07);
-  --border-hover: rgba(255, 255, 255, 0.15);
+  --border: rgba(14, 165, 233, 0.12);
+  --border-hover: rgba(14, 165, 233, 0.25);
 
   /* Border radius */
   --radius-pill: 999px;
@@ -141,7 +141,7 @@ button {
 
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
-  border-radius: var(--radius-pill);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -231,6 +231,14 @@ button {
   width: 20px;
   height: 1px;
   background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  flex-shrink: 0;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: rgba(14, 165, 233, 0.4);
   flex-shrink: 0;
 }
 
@@ -340,7 +348,7 @@ button {
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1;
-  border-radius: var(--radius-pill);
+  border-radius: 2px;
   border: 1px solid rgba(56, 189, 248, 0.5);
   cursor: pointer;
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition-fast);
@@ -376,8 +384,8 @@ button {
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border-hover);
+  border-radius: 2px;
+  border: 1px solid rgba(14, 165, 233, 0.25);
   cursor: pointer;
   transition: border-color var(--transition), color var(--transition), transform var(--transition-fast);
   text-decoration: none;
@@ -410,7 +418,7 @@ button {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 500;
-  border-radius: var(--radius-pill);
+  border-radius: 2px;
   border: 1px solid rgba(14, 165, 233, 0.2);
   line-height: 1;
   white-space: nowrap;
@@ -468,7 +476,7 @@ button {
 :focus-visible {
   outline: 2px solid var(--accent-light);
   outline-offset: 3px;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 /* ------------------------------------------------------------

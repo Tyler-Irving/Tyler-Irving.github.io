@@ -9,7 +9,13 @@ import Layout from '../layouts/Layout.astro';
   <main class="not-found">
     <div class="container">
       <div class="nf-content">
-        <span class="nf-code">404</span>
+        <!-- Corner HUD brackets -->
+        <span class="nf-bracket nf-bracket--tl" aria-hidden="true"></span>
+        <span class="nf-bracket nf-bracket--tr" aria-hidden="true"></span>
+        <span class="nf-bracket nf-bracket--bl" aria-hidden="true"></span>
+        <span class="nf-bracket nf-bracket--br" aria-hidden="true"></span>
+
+        <span class="nf-code">[ 404 ] &mdash; ROUTE NOT FOUND</span>
         <h1 class="nf-heading">Page not found.</h1>
         <p class="nf-body">That URL doesn't exist. You might have followed a broken link.</p>
         <a href="/" class="btn-primary">Back to portfolio &rarr;</a>
@@ -29,14 +35,31 @@ import Layout from '../layouts/Layout.astro';
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    position: relative;
+    padding: 3rem 2.5rem;
+    border: 1px solid rgba(14, 165, 233, 0.12);
+    max-width: 560px;
   }
+
+  /* Corner HUD brackets */
+  .nf-bracket {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+  }
+
+  .nf-bracket--tl { top: -1px;    left: -1px;  border-top:    1px solid rgba(14, 165, 233, 0.55); border-left:   1px solid rgba(14, 165, 233, 0.55); }
+  .nf-bracket--tr { top: -1px;    right: -1px; border-top:    1px solid rgba(14, 165, 233, 0.55); border-right:  1px solid rgba(14, 165, 233, 0.55); }
+  .nf-bracket--bl { bottom: -1px; left: -1px;  border-bottom: 1px solid rgba(14, 165, 233, 0.55); border-left:   1px solid rgba(14, 165, 233, 0.55); }
+  .nf-bracket--br { bottom: -1px; right: -1px; border-bottom: 1px solid rgba(14, 165, 233, 0.55); border-right:  1px solid rgba(14, 165, 233, 0.55); }
 
   .nf-code {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    color: var(--accent-light);
-    opacity: 0.6;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(14, 165, 233, 0.55);
   }
 
   .nf-heading {
