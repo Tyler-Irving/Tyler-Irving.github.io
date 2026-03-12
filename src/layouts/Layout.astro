@@ -59,8 +59,8 @@ const ogImage = new URL(image, siteUrl).href;
     <meta name="twitter:creator" content="@TylerIrving" />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0ea5e9" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#FAFAFA" />
+    <meta name="color-scheme" content="light dark" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -69,23 +69,22 @@ const ogImage = new URL(image, siteUrl).href;
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap.xml" />
 
-    <!-- Preload hero image for LCP -->
-    <link rel="preload" as="image" href="/assets/tyler-irving.jpg" />
-
-    <!-- Fonts — Clash Display (Fontshare) -->
-    <link rel="preconnect" href="https://api.fontshare.com" />
-    <link
-      rel="stylesheet"
-      href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"
-    />
-
-    <!-- Fonts — Google Fonts (Inter + JetBrains Mono) -->
+    <!-- Fonts — Google Fonts (Archivo + Space Grotesk + JetBrains Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap"
     />
+
+    <!-- Dark mode init — light is default; only go dark if user explicitly toggled -->
+    <script is:inline>
+      (function () {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
 
     <!-- Structured Data: Person -->
     <script type="application/ld+json">
@@ -224,78 +223,4 @@ const ogImage = new URL(image, siteUrl).href;
     <slot />
   </body>
 
-  <!--
-    Shimmer button injection — port of ShimmerButton (React/framer-motion component).
-    Injects the 4-element shimmer structure into every CTA after the DOM is ready.
-    CSS variables per button type are defined in global.css and ProjectCard.astro.
-  -->
-  <script>
-    function shimmerize(el: HTMLElement): void {
-      // Idempotent — skip if already shimmerized
-      if (el.querySelector('.shimmer-spark')) return;
-
-      // Wrap existing children in display:contents span so text stays above shimmer layers
-      const content = document.createElement('span');
-      content.className = 'shimmer-content';
-      while (el.firstChild) content.appendChild(el.firstChild);
-
-      // 1. Spark container (overflow: visible, container-type: size, blur filter)
-      const spark = document.createElement('span');
-      spark.className = 'shimmer-spark';
-      spark.setAttribute('aria-hidden', 'true');
-
-      // 2. Slide element — moves L→R across the button via shimmer-slide keyframe
-      const slide = document.createElement('span');
-      slide.className = 'shimmer-slide';
-
-      // 3. Rotate element — conic-gradient that spins inside the slide
-      const rotate = document.createElement('span');
-      rotate.className = 'shimmer-rotate';
-
-      slide.appendChild(rotate);
-      spark.appendChild(slide);
-
-      // 4. Highlight — inset box-shadow overlay (brightens on hover)
-      const highlight = document.createElement('span');
-      highlight.className = 'shimmer-highlight';
-      highlight.setAttribute('aria-hidden', 'true');
-
-      // 5. Backdrop — opaque fill at inset:1px, exposes shimmer glow on the 1px border ring
-      const backdrop = document.createElement('span');
-      backdrop.className = 'shimmer-backdrop';
-      backdrop.setAttribute('aria-hidden', 'true');
-
-      el.appendChild(spark);
-      el.appendChild(content);
-      el.appendChild(highlight);
-      el.appendChild(backdrop);
-    }
-
-    function initShimmer(): void {
-      document
-        .querySelectorAll<HTMLElement>('.btn-primary, .btn-ghost, .toggle-btn, .github-btn')
-        .forEach(shimmerize);
-
-      // Re-shimmerize any toggle buttons added dynamically (project card expand init
-      // runs on the same DOMContentLoaded tick — MutationObserver handles any late ones)
-      const observer = new MutationObserver((mutations) => {
-        for (const m of mutations) {
-          for (const node of m.addedNodes) {
-            if (node instanceof HTMLElement) {
-              node
-                .querySelectorAll<HTMLElement>('.btn-primary, .btn-ghost, .toggle-btn, .github-btn')
-                .forEach(shimmerize);
-            }
-          }
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initShimmer);
-    } else {
-      initShimmer();
-    }
-  </script>
 </html>

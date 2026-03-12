@@ -1,541 +1,224 @@
 ---
-// Hero.astro — Technical HUD redesign
-// Inspired by the hero-ascii component's military/HUD aesthetic:
-// corner brackets, section markers, dots rows, crosshair avatar, bottom notation.
+// Hero.astro — Editorial asymmetric layout
+// Off-White x Apple x Nike direction
+// No avatar. Massive display type + info column.
 ---
 
 <section class="hero" id="hero" aria-label="Introduction">
+  <div class="hero-inner">
 
-  <!-- ── Corner HUD brackets ──────────────────────────────── -->
-  <div class="hero-bracket hero-bracket--tl" aria-hidden="true"></div>
-  <div class="hero-bracket hero-bracket--tr" aria-hidden="true"></div>
-  <div class="hero-bracket hero-bracket--bl" aria-hidden="true"></div>
-  <div class="hero-bracket hero-bracket--br" aria-hidden="true"></div>
-
-  <div class="container hero-container">
-
-    <!-- ── Left: Text content ─────────────────────────────── -->
-    <div class="hero-left">
-
-      <!-- Section marker: ── 001 ──────────────── -->
-      <div class="hero-section-marker" id="hero-label">
-        <div class="marker-line"></div>
-        <span class="marker-num">001</span>
-        <div class="marker-line marker-line--grow"></div>
-      </div>
-
-      <!-- Role label -->
-      <span class="hero-role" id="hero-role">Senior RPA Developer &middot; Secret Clearance</span>
-
-      <!-- Name with dither accent -->
-      <div class="hero-name-wrap" id="hero-name">
-        <div class="dither-accent" aria-hidden="true"></div>
-        <h1 class="hero-name">
-          <span class="hero-name-gradient">Tyler</span> Irving
-        </h1>
-      </div>
-
-      <!-- Tagline -->
-      <p class="hero-tagline" id="hero-tagline">
-        I automate the work that kills productivity.
+    <!-- ── Main display type ─────────────────────────────── -->
+    <div class="hero-display" id="hero-display">
+      <h1 class="hero-name" aria-label="Tyler Irving">IRVING</h1>
+      <p class="hero-sub">
+        <em>c/o</em> <span class="hero-role-quote">&ldquo;software engineer&rdquo;</span>
       </p>
-
-      <!-- Dots decoration row -->
-      <div class="hero-dots" id="hero-dots" aria-hidden="true">
-        {Array.from({ length: 38 }).map(() => <span class="dot"></span>)}
-      </div>
-
-      <!-- Tech badges -->
-      <div class="hero-tags" id="hero-tags">
-        <span class="tech-badge">Python</span>
-        <span class="tech-badge">UiPath</span>
-        <span class="tech-badge">Live Trading</span>
-      </div>
-
-      <!-- CTAs -->
-      <div class="hero-ctas" id="hero-ctas">
-        <a href="#projects" class="btn-primary">View Work &rarr;</a>
-        <a
-          href="https://github.com/Tyler-Irving"
-          target="_blank"
-          rel="noopener noreferrer me"
-          class="btn-ghost"
-        >GitHub &nearr;</a>
-        <a
-          href="https://www.linkedin.com/in/tyler-irving-94b567189/"
-          target="_blank"
-          rel="noopener noreferrer me"
-          class="btn-ghost"
-        >LinkedIn &nearr;</a>
-      </div>
     </div>
 
-    <!-- ── Right: Avatar with crosshair frame ─────────────── -->
-    <div class="hero-right" id="hero-avatar">
-      <div class="avatar-wrap">
-
-        <!-- Crosshair extending lines -->
-        <div class="avatar-cross avatar-cross--top"    aria-hidden="true"></div>
-        <div class="avatar-cross avatar-cross--right"  aria-hidden="true"></div>
-        <div class="avatar-cross avatar-cross--bottom" aria-hidden="true"></div>
-        <div class="avatar-cross avatar-cross--left"   aria-hidden="true"></div>
-
-        <!-- Coordinate micro-labels -->
-        <span class="avatar-coord avatar-coord--top"    aria-hidden="true">37.7749°N</span>
-        <span class="avatar-coord avatar-coord--bottom" aria-hidden="true">122.4194°W</span>
-
-        <!-- Glow layers -->
-        <div class="avatar-glow-outer"></div>
-        <div class="avatar-glow"></div>
-        <div class="avatar-ring"></div>
-
-        <img
-          src="/assets/tyler-irving.jpg"
-          alt="Tyler Irving"
-          class="avatar-img"
-          width="280"
-          height="280"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </div>
+    <!-- ── Info column ───────────────────────────────────── -->
+    <div class="hero-info" id="hero-info" aria-label="Details">
+      <dl class="info-grid">
+        <div class="info-row">
+          <dt class="label-mono">Role</dt>
+          <dd>Senior RPA Developer</dd>
+        </div>
+        <div class="info-row">
+          <dt class="label-mono">Company</dt>
+          <dd>Baker Tilly</dd>
+        </div>
+        <div class="info-row">
+          <dt class="label-mono">Clearance</dt>
+          <dd>US Secret</dd>
+        </div>
+        <div class="info-row">
+          <dt class="label-mono">Status</dt>
+          <dd class="status-available">
+            <span class="status-dot" aria-hidden="true"></span>
+            Available
+          </dd>
+        </div>
+      </dl>
     </div>
 
   </div>
+
+  <!-- ── Diagonal rule ─────────────────────────────────── -->
+  <div class="hero-rule-wrap" id="hero-rule">
+    <div class="diagonal-rule"></div>
+  </div>
+
+  <!-- ── CTAs ──────────────────────────────────────────── -->
+  <div class="hero-ctas container" id="hero-ctas">
+    <a href="#projects" class="btn-primary">View Work &rarr;</a>
+    <a
+      href="https://github.com/Tyler-Irving"
+      target="_blank"
+      rel="noopener noreferrer me"
+      class="btn-ghost"
+    >GitHub &nearr;</a>
+    <a
+      href="https://www.linkedin.com/in/tyler-irving-94b567189/"
+      target="_blank"
+      rel="noopener noreferrer me"
+      class="btn-ghost"
+    >LinkedIn &nearr;</a>
+  </div>
+
 </section>
 
 <style>
-  /* ── Section shell ────────────────────────────────────────── */
+  /* ── Section shell ──────────────────────────────────────── */
   .hero {
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding-block: clamp(5rem, 12vh, 8rem);
-    /* Extra horizontal padding so bracket corners don't overlap content */
-    padding-inline: max(env(safe-area-inset-left), 1rem);
-  }
-
-  /* ── Corner HUD brackets ─────────────────────────────────── */
-  .hero-bracket {
-    position: absolute;
-    width: 36px;
-    height: 36px;
-    z-index: 2;
-    pointer-events: none;
-    transition: opacity var(--transition-slow);
-  }
-
-  .hero-bracket--tl {
-    top: clamp(1.25rem, 3vh, 2rem);
-    left: clamp(1.25rem, 3vw, 2rem);
-    border-top:  1px solid rgba(14, 165, 233, 0.45);
-    border-left: 1px solid rgba(14, 165, 233, 0.45);
-  }
-
-  .hero-bracket--tr {
-    top: clamp(1.25rem, 3vh, 2rem);
-    right: clamp(1.25rem, 3vw, 2rem);
-    border-top:   1px solid rgba(14, 165, 233, 0.45);
-    border-right: 1px solid rgba(14, 165, 233, 0.45);
-  }
-
-  .hero-bracket--bl {
-    bottom: clamp(1.25rem, 3vh, 2rem);
-    left:   clamp(1.25rem, 3vw, 2rem);
-    border-bottom: 1px solid rgba(14, 165, 233, 0.45);
-    border-left:   1px solid rgba(14, 165, 233, 0.45);
-  }
-
-  .hero-bracket--br {
-    bottom: clamp(1.25rem, 3vh, 2rem);
-    right:  clamp(1.25rem, 3vw, 2rem);
-    border-bottom: 1px solid rgba(14, 165, 233, 0.45);
-    border-right:  1px solid rgba(14, 165, 233, 0.45);
-  }
-
-  /* ── Grid ─────────────────────────────────────────────────── */
-  .hero-container {
-    display: grid;
-    grid-template-columns: 55fr 45fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
-  }
-
-  /* ── Left column ──────────────────────────────────────────── */
-  .hero-left {
+    min-height: calc(100vh - var(--nav-h));
+    padding-top: calc(var(--nav-h) + clamp(3rem, 8vh, 6rem));
+    padding-bottom: clamp(4rem, 8vh, 6rem);
     display: flex;
     flex-direction: column;
-    gap: 1.125rem;
+    justify-content: center;
+    gap: clamp(2rem, 4vh, 3rem);
+    overflow: hidden;
   }
 
-  /* Section marker ── 001 ──── */
-  .hero-section-marker {
+  /* ── Inner: display + info side by side ─────────────────── */
+  .hero-inner {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+
+  /* ── Display type ───────────────────────────────────────── */
+  .hero-display {
     display: flex;
-    align-items: center;
-    gap: 0.625rem;
-  }
-
-  .marker-line {
-    width: 28px;
-    height: 1px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    flex-shrink: 0;
-  }
-
-  .marker-line--grow {
-    flex: 1;
-    width: auto;
-    background: linear-gradient(90deg, var(--accent-light), transparent);
-  }
-
-  .marker-num {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    color: var(--accent-light);
-    flex-shrink: 0;
-  }
-
-  /* Role label (below marker) */
-  .hero-role {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: -0.25rem;
-  }
-
-  /* Name with dither accent */
-  .hero-name-wrap {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  /* Dither pattern vertical accent */
-  .dither-accent {
-    flex-shrink: 0;
-    width: 3px;
-    align-self: stretch;
-    min-height: 1em;
-    background-image:
-      repeating-linear-gradient(0deg,   transparent 0px, transparent 1px, rgba(14, 165, 233, 0.35) 1px, rgba(14, 165, 233, 0.35) 2px),
-      repeating-linear-gradient(90deg,  transparent 0px, transparent 1px, rgba(14, 165, 233, 0.35) 1px, rgba(14, 165, 233, 0.35) 2px);
-    background-size: 3px 3px;
-    border-radius: 1px;
-    margin-top: 0.1em;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .hero-name {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    font-size: clamp(5rem, 18vw, 16rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.88;
+    text-transform: uppercase;
+    color: var(--text);
+    /* Intentionally bleed slightly left for editorial feel */
+    margin-left: -0.03em;
+  }
+
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.375rem);
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+  }
+
+  .hero-sub em {
+    font-style: italic;
+    margin-right: 0.25em;
+  }
+
+  .hero-role-quote {
+    font-style: italic;
+  }
+
+  /* ── Info column ────────────────────────────────────────── */
+  .hero-info {
+    padding-bottom: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .info-grid {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+  }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .info-row:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .info-row dt {
+    color: var(--text-faint);
+    flex-shrink: 0;
+  }
+
+  .info-row dd {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
     color: var(--text);
   }
 
-  /* Gradient shimmer on "Tyler" */
-  .hero-name-gradient {
-    background: linear-gradient(135deg, var(--accent-light) 0%, #7dd3fc 50%, var(--accent-light) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 5s linear infinite;
-  }
-
-  .hero-tagline {
-    font-family: var(--font-body);
-    font-size: 1.25rem;
-    line-height: 1.55;
-    color: var(--text-muted);
-    max-width: 42ch;
-  }
-
-  /* Dots decoration row */
-  .hero-dots {
+  .status-available {
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
     align-items: center;
+    gap: 0.4rem;
+    color: var(--accent) !important;
   }
 
-  .dot {
+  .status-dot {
     display: inline-block;
-    width: 3px;
-    height: 3px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--accent);
     flex-shrink: 0;
   }
 
-  /* Every 6th dot gets a purple tint for rhythm */
-  .dot:nth-child(6n) {
-    background: rgba(14, 165, 233, 0.55);
+  /* ── Rule ───────────────────────────────────────────────── */
+  .hero-rule-wrap {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
   }
 
-  .hero-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
+  /* ── CTAs ───────────────────────────────────────────────── */
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.875rem;
-    margin-top: 0.125rem;
+    gap: 0.75rem;
   }
 
-  /* Bottom technical notation strip */
-  .hero-notation {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    margin-top: 0.25rem;
-  }
-
-  .notation-symbol {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--accent-light);
-    opacity: 0.6;
-    flex-shrink: 0;
-  }
-
-  .notation-line {
-    width: 24px;
-    height: 1px;
-    background: rgba(14, 165, 233, 0.2);
-    flex-shrink: 0;
-  }
-
-  .notation-text {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-faint);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* ── Right column ─────────────────────────────────────────── */
-  .hero-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .avatar-wrap {
-    position: relative;
-    display: inline-block;
-  }
-
-  /* ── Crosshair extending lines ────────────────────────────── */
-  .avatar-cross {
-    position: absolute;
-    background: rgba(14, 165, 233, 0.3);
-    z-index: 3;
-    pointer-events: none;
-  }
-
-  .avatar-cross--top {
-    width: 1px;
-    height: 28px;
-    top: -34px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .avatar-cross--right {
-    height: 1px;
-    width: 28px;
-    right: -34px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .avatar-cross--bottom {
-    width: 1px;
-    height: 28px;
-    bottom: -34px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .avatar-cross--left {
-    height: 1px;
-    width: 28px;
-    left: -34px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  /* Coordinate micro-labels */
-  .avatar-coord {
-    position: absolute;
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    color: rgba(56, 189, 248, 0.5);
-    white-space: nowrap;
-    z-index: 3;
-    pointer-events: none;
-  }
-
-  .avatar-coord--top {
-    top: -52px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .avatar-coord--bottom {
-    bottom: -52px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* Outer diffuse glow cloud */
-  .avatar-glow-outer {
-    position: absolute;
-    inset: -60px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
-    filter: blur(30px);
-    z-index: 0;
-    pointer-events: none;
-    animation: pulse 4s ease-in-out infinite;
-  }
-
-  /* Inner tight glow */
-  .avatar-glow {
-    position: absolute;
-    inset: -16px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 65%);
-    filter: blur(12px);
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  /* Decorative outer ring */
-  .avatar-ring {
-    position: absolute;
-    inset: -6px;
-    border-radius: 50%;
-    border: 1px solid rgba(14, 165, 233, 0.2);
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  /* Second outer ring — subtle */
-  .avatar-ring::after {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 1px dashed rgba(14, 165, 233, 0.1);
-  }
-
-  .avatar-img {
-    position: relative;
-    z-index: 2;
-    width: clamp(180px, 25vw, 280px);
-    height: clamp(180px, 25vw, 280px);
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid rgba(14, 165, 233, 0.25);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    transition:
-      border-color var(--transition),
-      box-shadow var(--transition),
-      transform var(--transition);
-    display: block;
-  }
-
-  .avatar-img:hover {
-    border-color: rgba(14, 165, 233, 0.55);
-    box-shadow: 0 0 48px rgba(14, 165, 233, 0.35);
-    transform: scale(1.02);
-  }
-
-  /* ── GSAP initial states — hidden until animated in ──────── */
-  #hero-label,
-  #hero-role,
-  #hero-name,
-  #hero-tagline,
-  #hero-dots,
-  #hero-tags,
-  #hero-ctas,
-  #hero-notation,
-  #hero-avatar {
+  /* ── GSAP initial state ─────────────────────────────────── */
+  #hero-display,
+  #hero-info,
+  #hero-rule,
+  #hero-ctas {
     opacity: 0;
   }
 
-  /* ── Mobile ───────────────────────────────────────────────── */
+  /* ── Responsive ─────────────────────────────────────────── */
   @media (max-width: 768px) {
-    .hero {
-      min-height: auto;
-      padding-block: clamp(5rem, 10vh, 6rem);
-    }
-
-    .hero-container {
+    .hero-inner {
       grid-template-columns: 1fr;
+      align-items: start;
     }
 
-    .hero-right {
-      order: -1;
-      margin-bottom: 1rem;
+    .hero-info {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
     }
 
-    /* Hide crosshair coords on mobile — too cramped */
-    .avatar-coord {
-      display: none;
-    }
-
-    .avatar-cross {
-      display: none;
-    }
-
-    .hero-tagline {
-      font-size: 1.1rem;
-    }
-
-    /* Simplify corner brackets on small screens */
-    .hero-bracket {
-      width: 24px;
-      height: 24px;
-    }
-
-    .marker-line--grow {
-      display: none;
-    }
-
-    .notation-text {
-      font-size: 0.55rem;
+    .info-row:first-child {
+      border-top: none;
     }
 
     .hero-name {
-      font-size: clamp(2.5rem, 10vw, 3.5rem);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .avatar-glow-outer {
-      animation: none;
-    }
-
-    .hero-name-gradient {
-      animation: none;
+      font-size: clamp(4rem, 22vw, 8rem);
     }
   }
 </style>
@@ -547,62 +230,43 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // ── Smooth scroll ─────────────────────────────────────────────
+  // ── Smooth scroll ──────────────────────────────────────────
   const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
   lenis.on('scroll', () => ScrollTrigger.update());
 
-  // ── Hero entrance animation ──────────────────────────────────
+  // ── Hero entrance ──────────────────────────────────────────
   function animateHeroIn() {
-    const leftEls = [
-      '#hero-label',
-      '#hero-role',
-      '#hero-name',
-      '#hero-tagline',
-      '#hero-dots',
-      '#hero-tags',
-      '#hero-ctas',
-      '#hero-notation',
-    ];
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    gsap.set(leftEls, { y: 28, opacity: 0 });
-    gsap.set('#hero-avatar', { x: 36, opacity: 0 });
-
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-
-    tl.to('#hero-label',    { y: 0, opacity: 1, duration: 0.55 })
-      .to('#hero-role',     { y: 0, opacity: 1, duration: 0.5  }, '-=0.35')
-      .to('#hero-name',     { y: 0, opacity: 1, duration: 0.7  }, '-=0.4')
-      .to('#hero-tagline',  { y: 0, opacity: 1, duration: 0.65 }, '-=0.45')
-      .to('#hero-dots',     { y: 0, opacity: 1, duration: 0.5  }, '-=0.4')
-      .to('#hero-tags',     { y: 0, opacity: 1, duration: 0.55 }, '-=0.35')
-      .to('#hero-ctas',     { y: 0, opacity: 1, duration: 0.6  }, '-=0.4')
-      .to('#hero-notation', { y: 0, opacity: 1, duration: 0.5  }, '-=0.4')
-      .to('#hero-avatar',   { x: 0, opacity: 1, duration: 0.7  }, '-=0.55')
+    tl.to('#hero-display', { opacity: 1, y: 0, duration: 0.7, clearProps: 'transform' }, 0)
+      .to('#hero-info',    { opacity: 1, y: 0, duration: 0.6 }, 0.15)
+      .to('#hero-rule',    { opacity: 1, y: 0, duration: 0.5 }, 0.3)
+      .to('#hero-ctas',    { opacity: 1, y: 0, duration: 0.5 }, 0.4)
       .add(() => ScrollTrigger.refresh());
   }
+
+  // Set initial translate state
+  gsap.set(['#hero-display', '#hero-info', '#hero-rule', '#hero-ctas'], { y: 28 });
 
   if (sessionStorage.getItem('booted') === 'true') {
     animateHeroIn();
   } else {
-    document.addEventListener('bootComplete', () => {
-      sessionStorage.setItem('booted', 'true');
-      animateHeroIn();
-    });
+    document.addEventListener('bootComplete', animateHeroIn);
   }
 
-  // ── Scroll reveals for all [data-animate="fadeUp"] elements ──
+  // ── Scroll reveals ─────────────────────────────────────────
   gsap.utils.toArray<Element>('[data-animate="fadeUp"]').forEach((el) => {
-    gsap.set(el, { y: 40, opacity: 0 });
+    gsap.set(el, { y: 32, opacity: 0 });
     gsap.to(el, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.7,
       ease: 'power2.out',
       scrollTrigger: {
         trigger: el,
-        start: 'top 90%',
+        start: 'top 92%',
         once: true,
       },
     });

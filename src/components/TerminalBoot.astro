@@ -1,257 +1,98 @@
 ---
-// TerminalBoot.astro
-// Full-screen terminal boot overlay — HUD/brutalist aesthetic.
-// Skipped if sessionStorage 'booted' === 'true'.
-// Dispatches 'bootComplete' event on fade-out.
+// TerminalBoot.astro — Typographic intro animation
+// Letters of "IRVING" animate in sequentially on first visit.
+// Fires 'bootComplete' event when done, sets sessionStorage.booted = 'true'.
+// On return visits, instantly fires bootComplete and skips animation.
 ---
 
 <div class="boot-overlay" id="boot-overlay" aria-hidden="true">
-  <div class="boot-terminal" role="status" aria-live="polite" aria-label="Portfolio loading">
-
-    <!-- Corner L-bracket decorations -->
-    <span class="corner corner-tl" aria-hidden="true"></span>
-    <span class="corner corner-tr" aria-hidden="true"></span>
-    <span class="corner corner-bl" aria-hidden="true"></span>
-    <span class="corner corner-br" aria-hidden="true"></span>
-
-    <!-- HUD header -->
-    <div class="boot-header" aria-hidden="true">
-      <span class="sys-tag">[ SYS.BOOT ]</span>
-      <span class="sys-id">TI-2026</span>
-    </div>
-    <div class="boot-divider" aria-hidden="true"></div>
-
-    <!-- Boot lines -->
-    <div class="boot-line boot-line--cmd" id="boot-line-0">
-      <span class="prompt">$</span>
-      <span class="cmd"> tyler --init</span>
-    </div>
-    <div class="boot-line boot-line--status" id="boot-line-1">
-      <span class="status-left">
-        <span class="prefix">&gt;</span>
-        <span class="label"> clearance</span>
-      </span>
-      <span class="status-right">
-        <span class="value">SECRET</span>
-        <span class="ok">[ OK ]</span>
-      </span>
-    </div>
-    <div class="boot-line boot-line--status" id="boot-line-2">
-      <span class="status-left">
-        <span class="prefix">&gt;</span>
-        <span class="label"> algo-trading</span>
-      </span>
-      <span class="status-right">
-        <span class="value">LIVE</span>
-        <span class="ok">[ OK ]</span>
-      </span>
-    </div>
-    <div class="boot-line boot-line--status" id="boot-line-3">
-      <span class="status-left">
-        <span class="prefix">&gt;</span>
-        <span class="label"> portfolio</span>
-      </span>
-      <span class="status-right">
-        <span class="value">LOADING</span>
-        <span class="ok">[ OK ]</span>
-      </span>
-    </div>
-
+  <div class="boot-word" id="boot-word">
+    {'IRVING'.split('').map((char) => (
+      <span class="boot-char" aria-hidden="true">{char}</span>
+    ))}
   </div>
 </div>
 
 <style>
-  /* ── Overlay ── */
   .boot-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #080808;
+    background: var(--bg);
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  /* Scanlines */
-  .boot-overlay::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.18) 2px,
-      rgba(0, 0, 0, 0.18) 4px
-    );
     pointer-events: none;
-    z-index: 0;
   }
 
-  /* ── Terminal box ── */
-  .boot-terminal {
-    position: relative;
+  .boot-word {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    padding: 28px 28px 24px;
-    border: 1px solid rgba(14, 165, 233, 0.18);
-    border-radius: 2px;
-    background: rgba(8, 8, 8, 0.96);
-    box-shadow:
-      0 0 0 1px rgba(14, 165, 233, 0.06),
-      0 0 40px rgba(14, 165, 233, 0.07),
-      0 0 80px rgba(0, 0, 0, 0.8);
-    width: min(440px, calc(100vw - 40px));
-    z-index: 1;
+    align-items: baseline;
+    gap: 0.04em;
+    overflow: hidden;
   }
 
-  /* ── Corner L-brackets ── */
-  .corner {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-  }
-
-  .corner-tl { top: -1px;    left: -1px;  border-top:    1px solid #0ea5e9; border-left:   1px solid #0ea5e9; }
-  .corner-tr { top: -1px;    right: -1px; border-top:    1px solid #0ea5e9; border-right:  1px solid #0ea5e9; }
-  .corner-bl { bottom: -1px; left: -1px;  border-bottom: 1px solid #0ea5e9; border-left:   1px solid #0ea5e9; }
-  .corner-br { bottom: -1px; right: -1px; border-bottom: 1px solid #0ea5e9; border-right:  1px solid #0ea5e9; }
-
-  /* ── HUD header ── */
-  .boot-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
+  .boot-char {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 14vw, 11rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
     text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-
-  .sys-tag {
-    color: #0ea5e9;
-    font-weight: 600;
-  }
-
-  .sys-id {
-    color: rgba(14, 165, 233, 0.4);
-  }
-
-  /* ── Divider ── */
-  .boot-divider {
-    height: 1px;
-    background: rgba(14, 165, 233, 0.12);
-    margin-bottom: 4px;
-  }
-
-  /* ── Boot lines — start invisible; GSAP reveals them ── */
-  .boot-line {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    white-space: nowrap;
+    color: var(--text);
     opacity: 0;
-    clip-path: inset(0 100% 0 0);
-  }
-
-  .boot-line--status {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    width: 100%;
-  }
-
-  .status-right {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-shrink: 0;
-  }
-
-  /* ── Color tokens ── */
-  .prompt { color: #0ea5e9; font-weight: 600; }
-  .cmd    { color: #f0f0f0; }
-  .prefix { color: rgba(14, 165, 233, 0.4); }
-  .label  { color: #c0c0c0; }
-  .value  { color: #e0e0e0; letter-spacing: 0.05em; }
-  .ok     { color: #22c55e; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.1em; }
-
-  /* ── Mobile ── */
-  @media (max-width: 480px) {
-    .boot-terminal {
-      padding: 22px 20px 20px;
-    }
-
-    .boot-line {
-      font-size: 0.78rem;
-    }
-
-    .boot-header {
-      font-size: 0.55rem;
-    }
-  }
-
-  /* ── Reduced motion: kill scanlines ── */
-  @media (prefers-reduced-motion: reduce) {
-    .boot-overlay::before {
-      display: none;
-    }
+    transform: translateY(40px);
+    will-change: transform, opacity;
   }
 </style>
 
 <script>
   import gsap from 'gsap';
 
-  const overlay = document.getElementById('boot-overlay') as HTMLElement | null;
+  const overlay = document.getElementById('boot-overlay');
+  const chars = document.querySelectorAll<HTMLElement>('.boot-char');
 
-  // Skip if already booted in this session
-  if (!overlay || sessionStorage.getItem('booted') === 'true') {
-    if (overlay) overlay.style.display = 'none';
-    // Still dispatch so listeners initialise correctly on return visits
+  function dispatchBoot() {
     document.dispatchEvent(new CustomEvent('bootComplete'));
-  } else {
-    const lines = [
-      document.getElementById('boot-line-0'),
-      document.getElementById('boot-line-1'),
-      document.getElementById('boot-line-2'),
-      document.getElementById('boot-line-3'),
-    ].filter(Boolean) as HTMLElement[];
+  }
 
+  if (sessionStorage.getItem('booted') === 'true') {
+    // Return visit — hide overlay immediately, fire event
+    if (overlay) overlay.style.display = 'none';
+    dispatchBoot();
+  } else {
+    // First visit — run animation
     const tl = gsap.timeline({
       onComplete: () => {
-        gsap.delayedCall(0.7, () => {
-          gsap.to(overlay, {
-            opacity: 0,
-            duration: 0.5,
-            ease: 'power2.inOut',
-            onComplete: () => {
-              overlay.style.display = 'none';
-              sessionStorage.setItem('booted', 'true');
-              document.dispatchEvent(new CustomEvent('bootComplete'));
-            },
-          });
+        sessionStorage.setItem('booted', 'true');
+        gsap.to(overlay, {
+          opacity: 0,
+          duration: 0.5,
+          ease: 'power2.in',
+          delay: 0.2,
+          onComplete: () => {
+            if (overlay) overlay.style.display = 'none';
+            dispatchBoot();
+          },
         });
       },
     });
 
-    // Reveal each line with a clip-path sweep + opacity
-    lines.forEach((line, i) => {
-      const startTime = i * 0.28;
+    // Stagger letters in from below
+    tl.to(chars, {
+      opacity: 1,
+      y: 0,
+      duration: 0.55,
+      ease: 'power3.out',
+      stagger: 0.07,
+    });
 
-      tl.to(
-        line,
-        {
-          opacity: 1,
-          clipPath: 'inset(0 0% 0 0)',
-          duration: 0.22,
-          ease: 'power2.out',
-        },
-        startTime
-      );
+    // Brief hold, then slight scale before exit
+    tl.to('.boot-word', {
+      scale: 1.04,
+      duration: 0.35,
+      ease: 'power2.inOut',
+      delay: 0.15,
     });
   }
 </script>
