@@ -1,13 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="180" height="180">
-  <!-- Light background -->
-  <rect width="32" height="32" fill="#FAFAFA"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Light background — #FAFAFA matches site default -->
+  <rect width="180" height="180" fill="#FAFAFA"/>
 
-  <!-- T — near-black -->
-  <rect x="1"  y="5"  width="13" height="5"  fill="#09090B"/>
-  <rect x="5"  y="10" width="5"  height="17" fill="#09090B"/>
+  <!-- T — condensed geometric, near-black -->
+  <path fill="#09090B" d="M 10 20 L 80 20 L 80 45 L 60 45 L 60 160 L 30 160 L 30 45 L 10 45 Z"/>
 
-  <!-- I — accent blue, serif caps for legibility -->
-  <rect x="18" y="5"  width="13" height="5"  fill="#2563EB"/>
-  <rect x="22" y="10" width="5"  height="12" fill="#2563EB"/>
-  <rect x="18" y="22" width="13" height="5"  fill="#2563EB"/>
+  <!-- I — serif caps, accent blue -->
+  <path fill="#2563EB" d="M 100 20 L 170 20 L 170 45 L 150 45 L 150 135 L 170 135 L 170 160 L 100 160 L 100 135 L 120 135 L 120 45 L 100 45 Z"/>
 </svg>
