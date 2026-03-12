@@ -1,24 +1,20 @@
 ---
 // Skills.astro
-// "What I bring" skill cards — LinesPatternCard component ported to native CSS.
-// Background: repeating diagonal SVG lines (purple, 30px) + gradient overlay that
-// reveals the pattern toward the top-right corner (matching LinesPatternCard's
-// bg-gradient-to-tr from-background/90 to-background/10 effect).
+// "Capabilities" skill cards — 2-column grid with shared border pattern.
+// Light/dark mode via CSS custom properties from global.css.
 ---
 
 <section id="skills" class="skills-section">
   <div class="container">
-    <span class="section-label"><span class="section-num">004</span> Capabilities</span>
-    <h2 class="section-heading">What I bring.</h2>
+    <div class="section-header">
+      <h2 class="section-title">Capabilities</h2>
+      <span class="section-count label-mono">[ 004 ]</span>
+    </div>
 
     <div class="skills-grid">
 
       <!-- ── 001 · RPA & Automation ──────────────────────────── -->
       <div class="skill-card" data-animate="fadeUp">
-        <span class="bracket bracket--tl" aria-hidden="true"></span>
-        <span class="bracket bracket--tr" aria-hidden="true"></span>
-        <div class="card-accent-line" aria-hidden="true"></div>
-
         <div class="skill-card-top">
           <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 1-6.23-.693L5 14.5m14.8.8 1.402 1.402c1 1 .03 2.603-1.366 2.397l-2.547-.852a9.001 9.001 0 0 0-5.578 0l-2.547.852c-1.396.206-2.366-1.397-1.366-2.397L5 14.5" />
@@ -44,10 +40,6 @@
 
       <!-- ── 002 · Backend Engineering ──────────────────────── -->
       <div class="skill-card" data-animate="fadeUp">
-        <span class="bracket bracket--tl" aria-hidden="true"></span>
-        <span class="bracket bracket--tr" aria-hidden="true"></span>
-        <div class="card-accent-line" aria-hidden="true"></div>
-
         <div class="skill-card-top">
           <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z" />
@@ -77,10 +69,6 @@
 
       <!-- ── 003 · Frontend & Full-Stack ────────────────────── -->
       <div class="skill-card" data-animate="fadeUp">
-        <span class="bracket bracket--tl" aria-hidden="true"></span>
-        <span class="bracket bracket--tr" aria-hidden="true"></span>
-        <div class="card-accent-line" aria-hidden="true"></div>
-
         <div class="skill-card-top">
           <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5 3 12l3.75 4.5m10.5 0 3.75-4.5L17.25 7.5M13.5 3 10.5 21" />
@@ -104,10 +92,6 @@
 
       <!-- ── 004 · Algo Trading & Systems ───────────────────── -->
       <div class="skill-card" data-animate="fadeUp">
-        <span class="bracket bracket--tl" aria-hidden="true"></span>
-        <span class="bracket bracket--tr" aria-hidden="true"></span>
-        <div class="card-accent-line" aria-hidden="true"></div>
-
         <div class="skill-card-top">
           <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
@@ -138,203 +122,76 @@
 </section>
 
 <style>
-  /*
-   * Diagonal lines SVG pattern — port of LinesPatternCard's bg-lines-pattern.
-   * Cyan-tinted (hsla(199, 86%, 49%, 0.28)) to match site accent.
-   * 45° diagonal lines at 30px repeat, same geometry as the React component.
-   */
-  :root {
-    --lines-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cg stroke-width='3.5' stroke='hsla(199%2C%2086%25%2C%2049%25%2C%200.28)' fill='none'%3E%3Cline x1='0' y1='0' x2='400' y2='400'/%3E%3Cline x1='400' y1='0' x2='800' y2='400'/%3E%3Cline x1='800' y1='0' x2='1200' y2='400'/%3E%3Cline x1='0' y1='400' x2='400' y2='800'/%3E%3Cline x1='400' y1='400' x2='800' y2='800'/%3E%3Cline x1='800' y1='400' x2='1200' y2='800'/%3E%3Cline x1='0' y1='800' x2='400' y2='1200'/%3E%3Cline x1='400' y1='800' x2='800' y2='1200'/%3E%3Cline x1='800' y1='800' x2='1200' y2='1200'/%3E%3C/g%3E%3C/svg%3E");
-  }
-
-  /* ── Section chrome ───────────────────────────────────────── */
   .skills-section {
     padding-block: var(--section-gap);
-  }
-
-  .section-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    color: var(--text);
-    margin-bottom: 3rem;
   }
 
   /* ── Grid ─────────────────────────────────────────────────── */
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 0;
+    margin-bottom: 3rem;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
   }
 
-  /* ── Skill card — LinesPatternCard port ───────────────────── */
-  /*
-   * Three-layer background (matches LinesPatternCard structure):
-   *  1. Gradient overlay: from-background/92 (bottom-left) to transparent (top-right)
-   *     — LinesPatternCard's gradient inner div
-   *  2. Diagonal lines SVG pattern repeating at 30px
-   *     — LinesPatternCard's bg-lines-pattern bg-repeat bg-[length:30px_30px] div
-   *  3. Base card dark gradient — the card shell itself
-   */
+  /* ── Skill card ───────────────────────────────────────────── */
   .skill-card {
-    background:
-      linear-gradient(
-        to top right,
-        rgba(12, 12, 12, 0.93) 0%,
-        rgba(12, 12, 12, 0.48) 48%,
-        rgba(12, 12, 12, 0.06) 100%
-      ),
-      var(--lines-pattern),
-      linear-gradient(160deg, #111111 0%, #0c0c0c 100%);
-    background-size: auto, 30px 30px, auto;
-    background-repeat: no-repeat, repeat, no-repeat;
-
-    border: 1px solid rgba(14, 165, 233, 0.1);
-    border-radius: 2px;
-    padding: 1.5rem;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 1.75rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    transition:
-      border-color var(--transition),
-      box-shadow var(--transition),
-      transform var(--transition),
-      background var(--transition);
+    gap: 1rem;
     position: relative;
-    overflow: hidden;
+    transition: background var(--transition);
+    cursor: default;
   }
 
-  /* Hover: gradient retreats, more lines visible — matches LinesPatternCard animate */
   .skill-card:hover {
-    background:
-      linear-gradient(
-        to top right,
-        rgba(12, 12, 12, 0.72) 0%,
-        rgba(12, 12, 12, 0.22) 48%,
-        rgba(12, 12, 12, 0.02) 100%
-      ),
-      var(--lines-pattern),
-      linear-gradient(160deg, #111111 0%, #0c0c0c 100%);
-    background-size: auto, 30px 30px, auto;
-    background-repeat: no-repeat, repeat, no-repeat;
-    border-color: rgba(14, 165, 233, 0.22);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-    transform: translateY(-3px);
-  }
-
-  /* ── Top accent line ──────────────────────────────────────── */
-  .card-accent-line {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(14, 165, 233, 0.5) 35%,
-      rgba(56, 189, 248, 0.75) 50%,
-      rgba(14, 165, 233, 0.5) 65%,
-      transparent 100%
-    );
-    opacity: 0.3;
-    transition: opacity var(--transition);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .skill-card:hover .card-accent-line {
-    opacity: 1;
-  }
-
-  /* ── Corner brackets ──────────────────────────────────────── */
-  .bracket {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    pointer-events: none;
-    z-index: 2;
-    transition: border-color var(--transition);
-  }
-
-  .bracket--tl {
-    top: 7px; left: 7px;
-    border-top: 1px solid rgba(14, 165, 233, 0.3);
-    border-left: 1px solid rgba(14, 165, 233, 0.3);
-  }
-
-  .bracket--tr {
-    top: 7px; right: 7px;
-    border-top: 1px solid rgba(14, 165, 233, 0.3);
-    border-right: 1px solid rgba(14, 165, 233, 0.3);
-  }
-
-  .skill-card:hover .bracket {
-    border-color: rgba(14, 165, 233, 0.6);
+    background: var(--bg-elevated);
   }
 
   /* ── Card top row ─────────────────────────────────────────── */
   .skill-card-top {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    position: relative;
-    z-index: 1;
+    gap: 0.625rem;
   }
 
   .skill-icon {
-    width: 1.125rem;
-    height: 1.125rem;
-    color: var(--accent-light);
+    width: 1rem;
+    height: 1rem;
+    color: var(--text-muted);
     flex-shrink: 0;
-    opacity: 0.75;
   }
 
   .skill-category {
     font-family: var(--font-display);
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--text);
-    letter-spacing: -0.01em;
     line-height: 1.2;
     flex: 1;
   }
 
   .skill-index {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.18em;
-    color: rgba(14, 165, 233, 0.35);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    color: var(--text-faint);
     flex-shrink: 0;
-    margin-left: auto;
   }
 
   /* ── Tagline ──────────────────────────────────────────────── */
   .skill-headline {
     font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.38);
+    color: var(--text-muted);
     font-style: italic;
     line-height: 1.5;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── Badge list ───────────────────────────────────────────── */
-  .badge-list {
-    position: relative;
-    z-index: 1;
-  }
-
-  @keyframes sweep {
-    0%   { left: -60%; }
-    100% { left: 160%; }
-  }
-
-  .clearance-lock-icon {
-    width: 1rem;
-    height: 1rem;
-    color: var(--accent-light);
-    flex-shrink: 0;
   }
 
   /* ── Outro ────────────────────────────────────────────────── */

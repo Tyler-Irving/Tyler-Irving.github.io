@@ -1,9 +1,33 @@
 ---
 import ProjectCard from './ProjectCard.astro';
 
-const featuredIds = new Set(['where-is-my-data', 'autoprospect']);
+const featuredIds = new Set(['autoprospect', 'where-is-my-data']);
 
 const projects = [
+  {
+    id: 'autoprospect',
+    title: 'AutoProspect',
+    icon: '🗺️',
+    oneliner: 'Draw a radius. Pick a category. A 4-phase Celery pipeline discovers, enriches 26 signals, and Claude-scores every lead. ~$0.02/business.',
+    description:
+      'Full-stack B2B SaaS for selling automation services to local businesses. Draw a radius on a Mapbox map, pick a category, and a 4-phase Celery pipeline fires: Google Places discovery → parallel website enrichment (26+ signals: CMS detection, CRM fingerprinting, booking tools, social scraping, review NLP) → Tier 1 Claude scoring → scan finalization. Celery chord orchestration fans out 50+ enrichment tasks in parallel then collapses into a nested scoring chord. Tier 1 scores every business automatically on four configurable dimensions (CRM, scheduling, marketing, invoicing) and returns structured JSON: 0–100 score, key signals, pitch angle, deal value estimate. Tier 2 triggers a deep-dive dossier on promoted leads — ROI argument, competitor analysis, implementation roadmap, objection rebuttals. Multi-tenant workspace isolation (8 Django apps), approval queues for AI-generated outreach, change detection that diffs enrichment snapshots across recurring scans, and per-call cost tracking that accumulates atomically on the parent scan.',
+    tech: ['React 18', 'Vite', 'Tailwind CSS v4', 'Mapbox GL JS', 'Zustand', 'Django 4', 'Django REST Framework', 'Celery 5', 'Celery Beat', 'Redis', 'PostgreSQL', 'BeautifulSoup4', 'Claude API (Sonnet/Haiku)', 'Google Places API', 'JWT Auth', 'Docker'],
+    github: 'https://github.com/Tyler-Irving/autoprospect',
+    stats: [
+      { label: 'Pipeline Stages', value: '4' },
+      { label: 'Test LOC', value: '4,647' },
+      { label: 'Cost / Business', value: '~$0.02' },
+      { label: 'Enrichment Signals', value: '26+' },
+    ],
+    decisions: [
+      'Celery chord orchestration fans 50+ enrichment tasks in parallel then collapses into a nested scoring chord; self-healing in score_business_tier1 detects dropped chord callbacks and finalizes the scan directly',
+      'Dynamic Claude prompts: scoring dimensions (4 weights summing to 1.0) and disqualification signals stored as JSON in AgentConfig, injected into the system prompt at runtime — zero code changes to customize scoring per workspace',
+      '3-day enrichment/scoring cache via enriched_at__gte cutoff — skips unchanged businesses on recurring scans, cutting Claude API spend ~2-3x; freshly enriched businesses always get a new score regardless',
+      'Atomic F() expressions on Scan.businesses_enriched prevent race conditions when 50+ concurrent tasks increment the progress counter simultaneously; circuit breaker auto-pauses SavedScans after 3 consecutive failures',
+      'Per-call cost tracking (prompt_tokens × model input rate + completion_tokens × output rate) saved to AutomationScore, then accumulated atomically on the parent Scan — budget enforcement before every new scan trigger',
+    ],
+    footer: 'Personal tool | March 2026',
+  },
   {
     id: 'where-is-my-data',
     title: 'Where is my data?',
@@ -26,30 +50,6 @@ const projects = [
       'Shareable URLs via custom useUrlSync hook with 500ms debounce — encodes filters, viewport, and selected datacenter into query params',
     ],
     footer: 'Deployed on Vercel | 2026',
-  },
-  {
-    id: 'autoprospect',
-    title: 'AutoProspect',
-    icon: '🗺️',
-    oneliner: 'Draw a radius. Pick a category. Get AI-scored leads with pitch angles, ready to close.',
-    description:
-      'Full-stack lead intelligence tool built for selling automation services to local businesses. Draw a radius on a map, select a business category, and the pipeline runs automatically: Google Places discovery, parallel website enrichment (CMS detection, booking forms, CRM fingerprinting via page source), then Claude scores each business 0–100 across four automation dimensions — CRM, scheduling, marketing, and invoicing. The lead dashboard shows color-coded map dots, full score breakdowns with AI reasoning, recommended pitch angles, and deal value estimates. A manual Tier 2 mode triggers a deeper per-lead dossier for high-potential targets.',
-    tech: ['React 18', 'Vite', 'Tailwind CSS v4', 'Mapbox GL JS', 'Zustand', 'Django 5', 'Django REST Framework', 'Celery 5', 'Redis', 'PostgreSQL', 'httpx', 'BeautifulSoup4', 'Claude API', 'Google Places API', 'Docker'],
-    github: 'https://github.com/Tyler-Irving/autoprospect',
-    stats: [
-      { label: 'Pipeline Stages', value: '4' },
-      { label: 'Tests', value: '64' },
-      { label: 'Cost / Business', value: '~$0.02' },
-      { label: 'Celery Queues', value: '3' },
-    ],
-    decisions: [
-      '3 named Celery queues (default, enrichment, scoring) — enrichment and scoring run fully in parallel across the worker fleet',
-      'Claude receives structured context from enrichment and returns JSON-only: 0–100 scores, key signals, pitch angle, deal value estimate',
-      'Two scoring tiers — Tier 1 runs automatically on every business; Tier 2 is a deeper dossier triggered manually on high-potential leads',
-      'Enrichment detects CMS, booking systems, CRM/payment processors from raw page source via httpx + BeautifulSoup — no headless browser',
-      'Cost tracking (prompt tokens, completion tokens, cents) saved to DB on every Claude call; monthly budget visible on dashboard',
-    ],
-    footer: 'Personal tool | March 2026',
   },
   {
     id: 'kalshi-dashboard',
@@ -148,8 +148,10 @@ const projects = [
 
 <section id="projects" class="projects-section">
   <div class="container">
-    <span class="section-label"><span class="section-num">002</span> Selected Work</span>
-    <h2 class="section-heading">Things I shipped.</h2>
+    <div class="section-header">
+      <h2 class="section-title">Selected Work</h2>
+      <span class="section-count label-mono">[ 01 — 06 ]</span>
+    </div>
 
     <div class="projects-grid">
       {
@@ -166,17 +168,6 @@ const projects = [
 <style>
   .projects-section {
     padding-block: var(--section-gap);
-  }
-
-  /* Section heading */
-  .section-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--text);
-    margin-bottom: 3rem;
-    line-height: 1.1;
   }
 
   /* Grid layout */
@@ -210,10 +201,6 @@ const projects = [
 
     .grid-item--full {
       grid-column: 1;
-    }
-
-    .section-heading {
-      margin-bottom: 2rem;
     }
   }
 </style>
