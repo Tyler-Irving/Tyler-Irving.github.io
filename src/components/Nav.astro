@@ -15,9 +15,10 @@
 
     <!-- Center: Links -->
     <nav class="nav-links" aria-label="Page sections">
-      <a href="#projects" class="nav-link">Work</a>
-      <a href="#work"     class="nav-link">Experience</a>
-      <a href="#skills"   class="nav-link">Skills</a>
+      <a href="#projects"  class="nav-link">Work</a>
+      <a href="#work"      class="nav-link">Experience</a>
+      <a href="#skills"    class="nav-link">Skills</a>
+      <a href="#education" class="nav-link">Education</a>
     </nav>
 
     <!-- Right: Label + dark mode -->
@@ -242,7 +243,7 @@
   }, { passive: true });
 
   // ── Active section tracking ────────────────────────────────
-  const sectionIds = ['projects', 'work', 'skills'];
+  const sectionIds = ['projects', 'work', 'skills', 'education'];
   const intersecting = new Set<string>();
 
   function setActive(id: string | null) {

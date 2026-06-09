@@ -1,32 +1,53 @@
 ---
 import ProjectCard from './ProjectCard.astro';
 
-const featuredIds = new Set(['autoprospect', 'where-is-my-data']);
+const featuredIds = new Set(['where-is-my-data']);
 
 const projects = [
   {
-    id: 'autoprospect',
-    title: 'AutoProspect',
-    icon: '🗺️',
-    oneliner: 'Draw a radius. Pick a category. A 4-phase Celery pipeline discovers, enriches 26 signals, and Claude-scores every lead. ~$0.02/business.',
+    id: 'garmin-mcp',
+    title: 'garmin-mcp',
+    icon: '⌚',
+    oneliner: 'An MCP server on PyPI that hands your Garmin Connect health data to Claude as typed tools — with a full OAuth 2.1 layer for custom connectors.',
     description:
-      'Full-stack B2B SaaS for selling automation services to local businesses. Draw a radius on a Mapbox map, pick a category, and a 4-phase Celery pipeline fires: Google Places discovery → parallel website enrichment (26+ signals: CMS detection, CRM fingerprinting, booking tools, social scraping, review NLP) → Tier 1 Claude scoring → scan finalization. Celery chord orchestration fans out 50+ enrichment tasks in parallel then collapses into a nested scoring chord. Tier 1 scores every business automatically on four configurable dimensions (CRM, scheduling, marketing, invoicing) and returns structured JSON: 0–100 score, key signals, pitch angle, deal value estimate. Tier 2 triggers a deep-dive dossier on promoted leads — ROI argument, competitor analysis, implementation roadmap, objection rebuttals. Multi-tenant workspace isolation (8 Django apps), approval queues for AI-generated outreach, change detection that diffs enrichment snapshots across recurring scans, and per-call cost tracking that accumulates atomically on the parent scan.',
-    tech: ['React 18', 'Vite', 'Tailwind CSS v4', 'Mapbox GL JS', 'Zustand', 'Django 4', 'Django REST Framework', 'Celery 5', 'Celery Beat', 'Redis', 'PostgreSQL', 'BeautifulSoup4', 'Claude API (Sonnet/Haiku)', 'Google Places API', 'JWT Auth', 'Docker'],
-    github: 'https://github.com/Tyler-Irving/autoprospect',
+      'Open-source Model Context Protocol (MCP) server, published on PyPI, that exposes Garmin Connect health & fitness data to Claude as typed tools — sleep, HRV, training load, body battery, and more — read-only by default, with an opt-in tool to build strength workouts. Self-hostable HTTP mode implements a full OAuth 2.1 layer with PKCE and Dynamic Client Registration so Claude.ai custom connectors can authenticate; Pydantic response models throughout, deployable to Google Cloud Run via Docker.',
+    tech: ['Python', 'FastMCP', 'Model Context Protocol', 'OAuth 2.1 (PKCE)', 'Pydantic', 'Docker', 'Cloud Run', 'PyPI'],
+    github: 'https://github.com/Tyler-Irving/garmin-mcp',
+    liveUrl: 'https://pypi.org/project/garmin-mcp/',
     stats: [
-      { label: 'Pipeline Stages', value: '4' },
-      { label: 'Test LOC', value: '4,647' },
-      { label: 'Cost / Business', value: '~$0.02' },
-      { label: 'Enrichment Signals', value: '26+' },
+      { label: 'Distribution', value: 'PyPI' },
+      { label: 'Auth', value: 'OAuth 2.1' },
+      { label: 'Deploy', value: 'Cloud Run' },
     ],
     decisions: [
-      'Celery chord orchestration fans 50+ enrichment tasks in parallel then collapses into a nested scoring chord; self-healing in score_business_tier1 detects dropped chord callbacks and finalizes the scan directly',
-      'Dynamic Claude prompts: scoring dimensions (4 weights summing to 1.0) and disqualification signals stored as JSON in AgentConfig, injected into the system prompt at runtime — zero code changes to customize scoring per workspace',
-      '3-day enrichment/scoring cache via enriched_at__gte cutoff — skips unchanged businesses on recurring scans, cutting Claude API spend ~2-3x; freshly enriched businesses always get a new score regardless',
-      'Atomic F() expressions on Scan.businesses_enriched prevent race conditions when 50+ concurrent tasks increment the progress counter simultaneously; circuit breaker auto-pauses SavedScans after 3 consecutive failures',
-      'Per-call cost tracking (prompt_tokens × model input rate + completion_tokens × output rate) saved to AutomationScore, then accumulated atomically on the parent Scan — budget enforcement before every new scan trigger',
+      'Published to PyPI as an installable MCP server — typed tools for sleep, HRV, training load, body battery and more Garmin Connect metrics',
+      'Read-only by default; building workouts is an explicit opt-in tool — safe to connect without write access to your account',
+      'Self-hostable HTTP mode implements OAuth 2.1 with PKCE + Dynamic Client Registration so Claude.ai custom connectors authenticate cleanly',
+      'Pydantic response models throughout, Dockerized for one-command deploy to Google Cloud Run',
     ],
-    footer: 'Personal tool | March 2026',
+    footer: 'Open source · MCP · on PyPI',
+  },
+  {
+    id: 'motor-pool',
+    title: 'motor-pool',
+    icon: '🛠️',
+    oneliner: 'A grounded AI assistant over public HMMWV Army manuals — it cites the manual, returns structured procedures, and refuses anything out of scope.',
+    description:
+      'Grounded AI diagnostic assistant over public-domain U.S. Army Technical Manuals for the HMMWV (materiel/maintenance domain). Hybrid retrieval — BM25 lexical search fused with dense embeddings via reciprocal rank fusion — feeds a QLoRA-fine-tuned model that cites the exact manual sections it used, returns structured maintenance procedures, and refuses out-of-scope questions instead of hallucinating. Shipped with an honest evaluation harness: on a frozen 136-item eval set, schema-valid output rose from 52% to 90% and refusal F1 from 14% to 90% versus the base model.',
+    tech: ['Python', 'Pydantic', 'bm25s', 'Dense embeddings', 'Reciprocal Rank Fusion', 'QLoRA', 'Unsloth', 'TRL'],
+    github: 'https://github.com/Tyler-Irving/motor-pool',
+    stats: [
+      { label: 'Schema-Valid', value: '52→90%' },
+      { label: 'Refusal F1', value: '14→90%' },
+      { label: 'Eval Items', value: '136' },
+    ],
+    decisions: [
+      'Hybrid retrieval — BM25 lexical + dense embeddings fused with reciprocal rank fusion (RRF) for robust recall over dense technical-manual language',
+      'Behavior-only QLoRA fine-tune (Unsloth + TRL) teaches citation, structured procedure output, and out-of-scope refusal — without memorizing the manuals',
+      'Frozen 136-item eval set as ground truth: schema-valid output 52%→90%, refusal F1 14%→90% vs. the base model — improvements are measured, not asserted',
+      'Pydantic-validated outputs — every answer is a typed, schema-checked procedure that cites its source sections, not free text',
+    ],
+    footer: 'Open source · AI / retrieval',
   },
   {
     id: 'where-is-my-data',
@@ -51,98 +72,6 @@ const projects = [
     ],
     footer: 'Deployed on Vercel | 2026',
   },
-  {
-    id: 'kalshi-dashboard',
-    title: 'Weather Arbitrage Dashboard',
-    icon: '📈',
-    oneliner: 'Real-time P&L, live log streaming, and 34 analytics endpoints for the trading daemon.',
-    description:
-      'Full-stack monitoring dashboard for the Kalshi weather arbitrage daemon. Reads structured JSON/JSONL files written by the daemon, streams live logs over WebSockets, and renders sortable position tables, P&L charts, and backtest analysis. 34 analytics endpoints cover win rates, edge calibration, provider accuracy, and cost efficiency.',
-    tech: ['React 19', 'TypeScript', 'Vite 6', 'Tailwind CSS 4', 'Zustand', 'Recharts', 'Django 4.2', 'Django Channels', 'Daphne (ASGI)', 'Django REST Framework'],
-    github: 'https://github.com/Tyler-Irving/kalshi-weather-arbitrage-dashboard',
-    stats: [
-      { label: 'Analytics Endpoints', value: '34' },
-      { label: 'Live Streaming', value: 'WS' },
-      { label: 'Frontend Poll', value: '10s' },
-    ],
-    decisions: [
-      'File-reader architecture — no database; Django reads daemon-produced JSON/JSONL on every request for always-fresh data',
-      'Django Channels + Daphne for ASGI — WebSockets handle live log streaming, HTTP handles all structured data',
-      'Zustand (1KB) over Redux — 2 stores, full TypeScript inference, zero boilerplate',
-      'Exponential backoff WebSocket reconnect (1s → 2s → 4s → max 30s) on the React client',
-    ],
-    footer: 'Full-stack dashboard | February 2026',
-  },
-  {
-    id: 'kalshi-daemon',
-    title: 'Weather Arbitrage Daemon',
-    icon: '⚡',
-    oneliner: 'Five ensemble models. Bayesian blending. Quarter-Kelly sizing. Running 24/7.',
-    description:
-      'Autonomous Python daemon that identifies and trades mispriced temperature contracts across 11 US cities on the Kalshi prediction market. Blends forecasts from NOAA, GFS, ICON/DWD, ECMWF, and GEM using Bayesian log-odds at 30/70 model/market weighting, sizes positions with Quarter-Kelly criterion, and enforces circuit breakers at daily and weekly loss limits.',
-    tech: ['Python', 'Kalshi API v2 (RSA-PSS)', 'NOAA', 'Open-Meteo (GFS/ICON/ECMWF/GEM)', 'Bayesian Probability', 'Quarter-Kelly Sizing', 'Telegram Bot API'],
-    github: 'https://github.com/Tyler-Irving/kalshi-weather-arbitrage-daemon',
-    stats: [
-      { label: 'Ensemble Models', value: '5' },
-      { label: 'Cities Covered', value: '11' },
-      { label: 'Poll Interval', value: '15m' },
-      { label: 'Max Positions', value: '20' },
-    ],
-    decisions: [
-      'Bayesian log-odds blending at 30% model / 70% market weighting — inverse-transformed back to probability space per trade',
-      'Quarter-Kelly criterion for position sizing from live edge and current bankroll — not a fixed fraction',
-      'RSA-PSS SHA256 signing for all Kalshi API calls using PEM private key — not API-key-only auth',
-      'Geography-based correlation groups (Gulf South, Northeast, Pacific) cap correlated exposure',
-      'Circuit breakers halt all trading at $5 daily / $10 weekly loss — daemon stops, does not just skip individual trades',
-    ],
-    footer: 'Running 24/7 in production | February 2026',
-  },
-  {
-    id: 'crypto-bot',
-    title: 'Crypto Trading Bot',
-    icon: '₿',
-    oneliner: 'Five signals. Composite scoring. Ten pairs. Limit buys. Zero babysitting.',
-    description:
-      'Automated cryptocurrency trading daemon for Coinbase Advanced Trade API. Scores each of 10 pairs on a 0–100 composite signal scale using RSI-14, MACD, EMA-12/26, volume spikes, and support-bounce analysis. Places limit buys 0.1% below market and market sells for stop-loss exits. 30-second polling loop with Telegram alerts and JSON portfolio state.',
-    tech: ['Python', 'Coinbase Advanced Trade API', 'RSI-14', 'MACD', 'EMA-12/26', 'Telegram Bot API'],
-    github: 'https://github.com/Tyler-Irving/crypto-daemon',
-    stats: [
-      { label: 'Trading Pairs', value: '10' },
-      { label: 'Composite Signals', value: '5' },
-      { label: 'Polling Interval', value: '30s' },
-      { label: 'Max Position', value: '$50' },
-    ],
-    decisions: [
-      'Composite 0–100 scoring gate — buys only trigger at ≥50 points to filter weak signals',
-      'All indicators (RSI-14, EMA-12/26, MACD) implemented from scratch in pure Python — zero pandas or numpy',
-      'Limit buys placed 0.1% below market for maker-fee advantage; market sells used only for stop-loss to guarantee fills',
-      'Max 5 concurrent positions, 30-minute per-pair cooldown, 40% balance cap per trade enforced before any buy',
-    ],
-    footer: 'Live trading deployment | February 2026',
-  },
-  {
-    id: 'file-to-api',
-    title: 'File-to-API Platform',
-    icon: '⚙️',
-    oneliner: 'Drop a CSV. Get a REST API with auth, pagination, and Swagger docs. Done in seconds.',
-    description:
-      "Upload a CSV or Excel file and get a fully functional REST API instantly. Django parses the file with pandas, infers column types at a 90% match threshold, creates a SQLite table dynamically at runtime using Python's type() constructor, and registers DRF ViewSets and URL routes without a server restart. Full CRUD, API key auth, rate limiting, and OpenAPI/Swagger docs included.",
-    tech: ['Django 4.2', 'Django REST Framework', 'React 19', 'TypeScript', 'Vite 7', 'Tailwind CSS 4', 'pandas', 'drf-spectacular (OpenAPI 3.0)'],
-    github: 'https://github.com/Tyler-Irving/file-to-api',
-    stats: [
-      { label: 'Upload → Live API', value: '<5s' },
-      { label: 'Rate Limit (reads)', value: '1k/hr' },
-      { label: 'Max Upload', value: '10 MB' },
-    ],
-    decisions: [
-      "Dynamic model generation at runtime via Python's type() constructor — no code generation, no server restart on upload",
-      'Runtime DRF router registration — ViewSets and URL routes injected into live URL conf without touching urls.py',
-      'SHA-256 + salt API key hashing with 8-char plaintext prefix for O(1) lookup — format: fta_{prefix}_{secret}',
-      '90% type-match threshold for schema inference — columns only typed as int/float/date if 90%+ of non-null values match',
-      'python-magic for MIME type validation — blocks malicious uploads regardless of file extension',
-    ],
-    footer: 'Full-stack platform | February 2026',
-  },
 ] as const;
 ---
 
@@ -150,7 +79,7 @@ const projects = [
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Selected Work</h2>
-      <span class="section-count label-mono">[ 01 — 06 ]</span>
+      <span class="section-count label-mono">[ 01 — 03 ]</span>
     </div>
 
     <div class="projects-grid">
@@ -177,7 +106,7 @@ const projects = [
     gap: 1.5rem;
   }
 
-  /* First card spans full width */
+  /* Featured card spans full width */
   .grid-item--full {
     grid-column: 1 / -1;
   }

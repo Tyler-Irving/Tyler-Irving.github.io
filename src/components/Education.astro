@@ -1,0 +1,132 @@
+---
+// Education.astro
+// "Education" — compact editorial list, matching WorkExperience styling.
+---
+
+<section id="education" class="edu-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Education</h2>
+      <span class="section-count label-mono">[ 2019 — 2020 ]</span>
+    </div>
+
+    <div class="edu-stack">
+
+      <article class="edu-card" data-animate="fadeUp">
+        <div class="edu-monogram" aria-hidden="true">BC</div>
+        <div class="edu-body">
+          <div class="edu-head">
+            <span class="edu-school">Base Camp Coding Academy</span>
+            <span class="edu-year">2020</span>
+          </div>
+          <span class="edu-program">Software Development</span>
+          <p class="edu-blurb">Selective, tuition-free, year-long immersive software-development program (Water Valley, MS) for nominated Mississippi high-school graduates &mdash; full-stack training built on real-world projects.</p>
+        </div>
+      </article>
+
+      <article class="edu-card" data-animate="fadeUp">
+        <div class="edu-monogram" aria-hidden="true">HH</div>
+        <div class="edu-body">
+          <div class="edu-head">
+            <span class="edu-school">Hernando High School</span>
+            <span class="edu-year">2019</span>
+          </div>
+          <span class="edu-program">Diploma</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .edu-section {
+    padding-block: var(--section-gap);
+  }
+
+  .edu-stack {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .edu-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    transition: background var(--transition);
+  }
+
+  .edu-card:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .edu-monogram {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .edu-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .edu-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .edu-school {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .edu-year {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  .edu-program {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .edu-blurb {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .edu-card {
+      padding: 1.25rem 1rem;
+    }
+  }
+</style>

@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = 'Tyler Irving | Senior RPA Developer & Automation Consultant',
-  description = 'Tyler Irving — Senior RPA Developer & Automation Consultant with Secret Security Clearance. UiPath automation for the U.S. Navy at Baker Tilly, algorithmic trading systems, and full-stack apps in Python, Django, React, and TypeScript.',
+  title = 'Tyler Irving | Full-Stack Software Engineer',
+  description = 'Tyler Irving — Full-Stack Software Engineer with an active U.S. Secret Clearance. Currently building UiPath automation for the U.S. Navy at Baker Tilly, plus AI/ML tools and full-stack apps in Python, TypeScript, React, and Django.',
   image = '/images/og-image.png',
   canonical,
 } = Astro.props;
@@ -33,7 +33,7 @@ const ogImage = new URL(image, siteUrl).href;
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Tyler Irving, RPA Developer, Automation Consultant, UiPath, Python developer, Django developer, React developer, TypeScript, full-stack developer, algorithmic trading, Kalshi, Secret Security Clearance, Baker Tilly, U.S. Navy, portfolio, software engineer, automation systems, live trading daemon"
+      content="Tyler Irving, Full-Stack Software Engineer, Python developer, TypeScript, React developer, Django developer, Next.js, full-stack developer, AI engineer, Claude API, Anthropic, Model Context Protocol, MCP, RAG, QLoRA, RPA developer, UiPath, Automation Consultant, Secret Security Clearance, Baker Tilly, U.S. Navy, portfolio, software engineer, automation systems"
     />
     <meta name="author" content="Tyler Irving" />
     <link rel="canonical" href={canonicalUrl} />
@@ -94,8 +94,8 @@ const ogImage = new URL(image, siteUrl).href;
         "name": "Tyler Irving",
         "url": "https://tyler-irving.github.io",
         "image": "https://tyler-irving.github.io/assets/tyler-irving.jpg",
-        "jobTitle": "Senior RPA Developer & Automation Consultant",
-        "description": "Senior RPA Developer with US Secret Security Clearance building UiPath automation for the U.S. Navy at Baker Tilly, plus algorithmic trading daemons and full-stack web applications.",
+        "jobTitle": "Full-Stack Software Engineer",
+        "description": "Full-Stack Software Engineer with an active US Secret Clearance, currently building UiPath automation for the U.S. Navy at Baker Tilly, plus AI/ML tools and full-stack web applications in Python, TypeScript, React, and Django.",
         "worksFor": {
           "@type": "Organization",
           "name": "Baker Tilly",
@@ -103,12 +103,12 @@ const ogImage = new URL(image, siteUrl).href;
         },
         "hasOccupation": {
           "@type": "Occupation",
-          "name": "Senior RPA Developer",
+          "name": "Full-Stack Software Engineer",
           "occupationLocation": {
             "@type": "Country",
             "name": "United States"
           },
-          "skills": "UiPath, Python, Django, React, TypeScript, Robotic Process Automation, Automation Engineering"
+          "skills": "Python, TypeScript, React, Django, FastAPI, PostgreSQL, Docker, Google Cloud Platform, Claude API, Model Context Protocol, Retrieval-Augmented Generation, UiPath, Robotic Process Automation, Full-Stack Development"
         },
         "sameAs": [
           "https://github.com/Tyler-Irving",
@@ -127,14 +127,27 @@ const ogImage = new URL(image, siteUrl).href;
           "TypeScript",
           "Full-Stack Development",
           "Software Engineering",
-          "Algorithmic Trading",
-          "Kalshi Prediction Markets",
-          "Bayesian Probability",
           "Automation Systems",
           "Machine Learning",
+          "Claude API",
+          "Anthropic",
+          "Model Context Protocol",
+          "Retrieval-Augmented Generation",
+          "QLoRA Fine-Tuning",
           "Enterprise Automation",
           "U.S. Navy",
           "Secret Security Clearance"
+        ],
+        "alumniOf": [
+          {
+            "@type": "EducationalOrganization",
+            "name": "Base Camp Coding Academy",
+            "url": "https://www.basecampcodingacademy.org"
+          },
+          {
+            "@type": "HighSchool",
+            "name": "Hernando High School"
+          }
         ]
       }
     </script>
@@ -145,16 +158,16 @@ const ogImage = new URL(image, siteUrl).href;
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "Tyler Irving — Portfolio Projects",
-        "description": "Software projects built by Tyler Irving: trading systems, web apps, automation tools, and developer platforms.",
+        "description": "Software projects built by Tyler Irving: AI/ML tools, an MCP server, and a full-stack cloud-infrastructure web app.",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "item": {
-              "@type": "WebApplication",
-              "name": "Where is my data?",
-              "url": "https://whereismydata.io",
-              "description": "Interactive globe visualizing 181 cloud and colocation datacenters across 43 providers. Latency estimation, pricing comparison, and CSV/JSON export.",
+              "@type": "SoftwareApplication",
+              "name": "garmin-mcp",
+              "url": "https://pypi.org/project/garmin-mcp/",
+              "description": "Open-source Model Context Protocol (MCP) server, published on PyPI, exposing Garmin Connect health data to Claude as typed tools, with a self-hostable OAuth 2.1 layer for Claude.ai custom connectors.",
               "applicationCategory": "DeveloperApplication",
               "author": { "@type": "Person", "name": "Tyler Irving" }
             }
@@ -163,10 +176,11 @@ const ogImage = new URL(image, siteUrl).href;
             "@type": "ListItem",
             "position": 2,
             "item": {
-              "@type": "WebApplication",
-              "name": "AutoProspect",
-              "description": "AI-powered lead intelligence tool for selling automation services. Draws radius on map, discovers local businesses, enriches them, and scores automation potential with Claude.",
-              "applicationCategory": "BusinessApplication",
+              "@type": "SoftwareApplication",
+              "name": "motor-pool",
+              "url": "https://github.com/Tyler-Irving/motor-pool",
+              "description": "Grounded AI diagnostic assistant over public U.S. Army HMMWV technical manuals. Hybrid retrieval (BM25 + dense embeddings with reciprocal rank fusion) and a QLoRA-fine-tuned model that cites manual sections, returns structured procedures, and refuses out-of-scope questions.",
+              "applicationCategory": "DeveloperApplication",
               "author": { "@type": "Person", "name": "Tyler Irving" }
             }
           },
@@ -175,41 +189,9 @@ const ogImage = new URL(image, siteUrl).href;
             "position": 3,
             "item": {
               "@type": "WebApplication",
-              "name": "Weather Arbitrage Dashboard",
-              "description": "Full-stack monitoring dashboard for a Kalshi weather arbitrage trading daemon. Live log streaming over WebSockets, P&L charts, and 34 analytics endpoints.",
-              "applicationCategory": "FinanceApplication",
-              "author": { "@type": "Person", "name": "Tyler Irving" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "item": {
-              "@type": "SoftwareApplication",
-              "name": "Weather Arbitrage Daemon",
-              "description": "Autonomous Python daemon trading mispriced temperature contracts on Kalshi using 5 ensemble models, Bayesian blending, and Quarter-Kelly position sizing.",
-              "applicationCategory": "FinanceApplication",
-              "author": { "@type": "Person", "name": "Tyler Irving" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "item": {
-              "@type": "SoftwareApplication",
-              "name": "Crypto Trading Bot",
-              "description": "Automated cryptocurrency trading daemon for Coinbase Advanced Trade API with RSI-14, MACD, EMA-12/26, volume spike, and support-bounce composite scoring.",
-              "applicationCategory": "FinanceApplication",
-              "author": { "@type": "Person", "name": "Tyler Irving" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 6,
-            "item": {
-              "@type": "WebApplication",
-              "name": "File-to-API Platform",
-              "description": "Upload a CSV or Excel file and instantly get a fully functional REST API with auth, rate limiting, pagination, and Swagger docs. Dynamic model generation at runtime.",
+              "name": "Where is my data?",
+              "url": "https://whereismydata.io",
+              "description": "Interactive globe visualizing 181 cloud and colocation datacenters across 43 providers. Latency estimation, pricing comparison, and CSV/JSON export.",
               "applicationCategory": "DeveloperApplication",
               "author": { "@type": "Person", "name": "Tyler Irving" }
             }
